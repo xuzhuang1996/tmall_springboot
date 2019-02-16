@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	 
+	<head th:include="include/admin/adminHeader::html('角色管理')" ></head>
+	<body>
+		<div th:replace="include/admin/adminNavigator::html" ></div>
+		<script>
+		    $(function(){
+		    	
+		        var data4Vue = {
+		        		uri:'roles',
+		                beans: [],
+		                pagination:{}
+		    	};
+		
+		        //ViewModel
+		        var vue = new Vue({
+		            el: '#workingArea',
+		            data: data4Vue,
+		            mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
+		            	//this.list(0);
+                        this.list();
+		            },        
+		            methods: {
+                        list:function(){
+                            var url =  this.uri;
+                            axios.get(url).then(function(response) {
+                                vue.pagination = response.data;
+                                console.log(vue.pagination);
+                                vue.beans = response.data;
+                            });
+                        },
+		            	list1:function(start){
+		                    var url =  this.uri+ "?start="+start;
+		                    axios.get(url).then(function(response) {
+		                    	vue.pagination = response.data;
+		                    	vue.beans = response.data.content	;
+		                    });
+		            	},             
+		                jump: function(page){
+		                	jump(page,vue); //定义在adminHeader.html 中
+		                },
+		                jumpByNumber: function(start){
+		                	jumpByNumber(start,vue);
+		                }
+		            }
+		        });                
+		    });
+		
+		</script>
+		
+		<div id="workingArea" >
+		    <h1 class="label label-info" >角色管理</h1>
+		    <br>
+		    <br>
+		
+		    <div class="listDataTableDiv">
+		        <table class="table table-striped table-bordered table-hover  table-condensed">
+		            <thead>
+		            <tr class="success">
+		                <th>ID</th>
+		                <th>角色</th>
+						<th>名称</th>
+						<th>权限</th>
+						<th>编辑</th>
+						<th>删除</th>
+		            </tr>
+		            </thead>
+		            <tbody>
+						<tr v-for="bean in beans ">
+						    <td>{{bean.id}}</td>
+						    <td>
+						    	{{bean.name}}
+						    </td>
+							<td>{{bean.desc_}}</td>
+							<td>
+								<div v-for="permission in bean.permissions ">
+									{{permission.desc_}}
+								</div>
+							</td>
+							<td>
+								<a :href="'admin_role_edit?id=' + bean.id "><span class="glyphicon glyphicon-edit"></span></a>
+							</td>
+							<td>
+								<a href="#nowhere"  @click="deleteBean(bean.id)"><span class="   glyphicon glyphicon-trash"></span></a>
+							</td>
+						</tr>
+		            </tbody>
+		        </table>
+		    </div>
+		
+			<div th:replace="include/admin/adminPage::html" ></div>
+		
+		    
+		</div>
+		
+		<div th:replace="include/admin/adminFooter::html" ></div>
+	</body>
+</html>		
