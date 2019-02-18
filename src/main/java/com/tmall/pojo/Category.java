@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 
+// 对实体类的编写，对主键以及外键进行注解
+// 如果既没有指明 关联到哪个Column,又没有明确要用@Transient忽略，那么就会自动关联到表对应的同名字段
+
 // 前后端交互时，Category 对象就会被转换为 json 数据。在 jpa 工作过程中，就会创造代理类来继承 Category ，
 // 并添加 handler 和 hibernateLazyInitializer 这两个无须json化的属性，所以这里需要用JsonIgnoreProperties把这两个属性忽略掉。
 @Entity

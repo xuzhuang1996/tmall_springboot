@@ -9,11 +9,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryService {
-
     @Autowired
     CategoryDAO categoryDAO;
     public List<Category> list() {
@@ -42,7 +43,10 @@ public class CategoryService {
     }
 
     public Category get(int id) {
-        Category c=categoryDAO.getOne(id);
-        return c;
+        Optional<Category> CategoryInfoOptional = categoryDAO.findById(id);
+        if (!CategoryInfoOptional.isPresent()) {
+            return null;
+        }
+        return CategoryInfoOptional.get();
     }
 }

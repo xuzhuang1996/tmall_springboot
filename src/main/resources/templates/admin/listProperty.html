@@ -10,7 +10,7 @@
             uri:'properties',//vue用到的数据， uri表示访问哪个地址去获取数据，这里的值是 properties，和 PropertyController.java 相呼应
             beans: [],
             bean: { id: 0, name: '',category:{id:0}},
-            pagination:{},
+            JsonDataForPagination:{},
             category:''
             //file: null
         };
@@ -28,14 +28,15 @@
                 getCategory:function(cid){
                     var url = "categories/"+cid;
                     axios.get(url).then(function (response){
-                        vue.category=response.data;
+                        vue.category=response.data;//进入属性页面时就拿到了目录这个bean
+                        console.log(vue.category);
                     })
                 },
                 list:function(start){
                     var url =  "categories/"+cid+"/"+this.uri+ "?start="+start;
                     axios.get(url).then(function(response) {
-                        vue.pagination = response.data;
-                        console.log(vue.pagination);
+                        vue.JsonDataForPagination = response.data;
+                        console.log(vue.JsonDataForPagination);
                         vue.beans = response.data.content;
                     });
                 },
