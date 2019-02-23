@@ -1,0 +1,49 @@
+<!-- 模仿天猫整站springboot 教程 为how2j.cn 版权所有-->
+<!-- 本教程仅用于学习使用，切勿用于非法用途，由此引起一切后果与本站无关-->
+<!-- 供购买者学习，请勿私自传播，否则自行承担相关法律责任-->
+
+<div th:fragment="html" xmlns:th="http://www.thymeleaf.org">
+    <img src="img/site/catear.png" id="catear" class="catear"/>
+
+    <div class="categoryWithCarousel">
+
+
+        <div class="headbar show1">
+            <div class="head ">
+
+                <span style="margin-left:10px" class="glyphicon glyphicon-th-list"></span>
+                <span style="margin-left:10px" >商品分类</span>
+
+            </div>
+
+            <div class="rightMenu">
+                <span><a href=""><img src="img/site/chaoshi.png"/></a></span>
+                <span><a href=""><img src="img/site/guoji.png"/></a></span>
+
+                <span v-for="c,index in categories" v-if='index<=3'>
+						<a :href="'category?cid='+c.id">{{c.name}}</a>
+					</span>
+            </div>
+
+        </div>
+
+        <div style="position: relative">
+            <div th:replace="include/fore/home/categoryMenu::html" ></div>
+        </div>
+
+        <div style="position: relative;left: 0;top: 0;">
+            <div th:replace="include/fore/home/productsAsideCategorys::html" ></div>
+        </div>
+
+
+        <div th:replace="include/fore/home/carousel::html" ></div>
+
+
+        <div class="carouselBackgroundDiv">
+        </div>
+
+    </div>
+</div>
+
+
+

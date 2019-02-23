@@ -22,8 +22,8 @@ public class PropertyValueService {
     PropertyService propertyService;
 
     //在创建product时获取获取时需要初始化
-    public void init(int pid){
-        Product product = productService.get(pid);
+    public void init(Product product){
+        //Product product = productService.get(pid);//非要用这个会进入死循环。出现StackOverflowError错误看看是否进入死循环。
         List<Property> properties = propertyService.listByCategory(product.getCategory().getId());
         //拿到所有属性后，对该产品，生成该产品的属性值
         for (Property property: properties) {

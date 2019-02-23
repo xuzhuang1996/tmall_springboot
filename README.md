@@ -22,7 +22,8 @@
 
 1.查询分页：教程里面选择对Page接口进行扩展，定义一个类Page4Navigator。我觉得繁琐，因为查询后的Page数据转json后本身自带各种分页数据。
 
-
+## 亮点难点：
+1. 数据库中没有存储图片，一个产品一对多张图片，如何处理：取出产品的时候需要进行设置图片。
 
 
 ## 错误处理：
@@ -31,15 +32,21 @@
 
 2. JPA中的getOne：在PropertyService中调用CategoryService的get方法时，即使cid已经传进去，依然返回无效的Category。
 
-原因：基本的区别是getOne延迟加载而findOne不是。不过现在JPA已经移除了findone方法。只能用repository.findById(productId).get()。
+   原因：基本的区别是getOne延迟加载而findOne不是。不过现在JPA已经移除了findone方法。只能用repository.findById(productId).get()。
 
 3. 如果控制器返回没问题，那么试着注释一下前端启动时调用的函数。找准问题来源。
+
+4. 出现StackOverflowError错误看看是否进入死循环。
+
+5. 如果categorys转json传前端时，category里面有products属性，然后就会遍历product，而product又有category属性，于是进入死循环。
+
 
 ## 查看用法
 1. 实体类：从Category开始，之后查看Property类的处理（多对一）。如果某些字段类中有但数据库中没有，则需要注解进行忽略。
 
-- product表是没有ProductImage信息的，但是product类有该字段，只是运用Transient注解在存储时将其忽略，因此取出来Product时是需要设置这些被忽略的字段。因此可以在productService也可以在控制器中设置。我基于控制器只写逻辑代码的原则，将设置放在了服务层。
-- product表是没有PropertyValue信息的，同时product类也没有PropertyValue字段。因此在创建product时PropertyValue也要跟着创建，同时进行绑定。
+   - product表是没有ProductImage信息的，但是product类有该字段，只是运用Transient注解在存储时将其忽略，因此取出来Product时是需要设置这些被忽略的字段。因此可以在productService也可以在控制器中设置。我基于控制器只写逻辑代码的原则，将设置放在了服务层。
+   - product表是没有PropertyValue信息的，同时product类也没有PropertyValue字段。因此在创建product时PropertyValue也要跟着创建，同时进行绑定。
 
 2. DAO：继承JPA仓库。如果有特殊需求，需要根据其他实体对象查询该对象，增加方法findByClassName。
-3. 
+
+3. 在页面跳转控制器中，如果写好跳转的HTML，页面出不来，就可以去页面查需要哪些数据了。

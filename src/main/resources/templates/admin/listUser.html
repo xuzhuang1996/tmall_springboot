@@ -10,7 +10,7 @@
 		        var data4Vue = {
 		        		uri:'users',
 		                beans: [],
-		                pagination:{},
+					    JsonDataForPagination:{},
                         role:[]
 		    	};
 		
@@ -26,15 +26,15 @@
                         list:function(){
                             var url =  this.uri;
                             axios.get(url).then(function(response) {
-                                vue.pagination = response.data;
-                                console.log(vue.pagination);
+                                vue.JsonDataForPagination = response.data;
+                                console.log(vue.JsonDataForPagination);
                                 vue.beans = response.data;
                             });
                         },
 		            	list1:function(start){
 		                    var url =  this.uri+ "?start="+start;
 		                    axios.get(url).then(function(response) {
-		                    	vue.pagination = response.data;
+		                    	vue.JsonDataForPagination = response.data;
 		                    	vue.beans = response.data.content	;
 		                    });
 		            	},
