@@ -31,6 +31,27 @@ public class OrderItemService {
         return result;
     }
 
+    //一个订单有多个订单项。一对多。查出一个订单下的所有订单项
+    public void fill(Order order) {
+        //OrderItemService orderItemService = SpringContextUtil.getBean(OrderItemService.class);
+        List<OrderItem> orderItems = listByOrder(order);
+        float total = 0;
+        int totalNumber = 0;
+        for (OrderItem oi :orderItems) {
+            total+=oi.getNumber()*oi.getProduct().getPromotePrice();
+            totalNumber+=oi.getNumber();
+            productImageService.setFirstProdutImage(oi.getProduct());
+        }
+        order.setTotal(total);
+        order.setOrderItems(orderItems);
+        order.setTotalNumber(totalNumber);
+        order.setOrderItems(orderItems);
+    }
+    public void fill(List<Order> orders) {
+        for (Order order : orders)
+            fill(order);
+    }
+
     //各种list
     public List<OrderItem> listByUser(User user) {
         return orderItemDAO.findByUserAndOrderIsNull(user);

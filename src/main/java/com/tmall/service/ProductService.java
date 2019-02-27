@@ -4,12 +4,18 @@ import com.tmall.dao.CategoryDAO;
 import com.tmall.dao.ProductDAO;
 import com.tmall.dao.PropertyDAO;
 import com.tmall.pojo.Category;
+import com.tmall.pojo.OrderItem;
 import com.tmall.pojo.Product;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
+import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,6 +32,10 @@ public class ProductService {
     ProductImageService productImageService;
     @Autowired
     PropertyValueService propertyValueService;
+    @Autowired
+    OrderItemService orderItemService;
+    @Autowired
+    ReviewService reviewService;
 
     public Page<Product> listProduct(int start, int size, int cid){
         Category c = categoryService.get(cid);
@@ -65,8 +75,41 @@ public class ProductService {
         }
     }
 
-    private List<Product> listByCategory(Category category) {
+    //增加评论
+    public void setSaleAndReviewNumber(Product product) {
+        int saleCount = orderItemService.getSaleCount(product);
+        product.setSaleCount(saleCount);
+
+        int reviewCount = reviewService.getCount(product);
+        product.setReviewCount(reviewCount);
+    }
+
+
+    public void setSaleAndReviewNumber(List<Product> products) {
+        for (Product product : products)
+            setSaleAndReviewNumber(product);
+    }
+
+    public List<Product> listByCategory(Category category) {
         return productDAO.findByCategoryOrderById(category);
+    }
+
+    public List<Product> search(String keyword, int start, int size) {
+//        initDatabase2ES();
+//        FunctionScoreQueryBuilder functionScoreQueryBuilder = QueryBuilders.functionScoreQuery()
+//                .add(QueryBuilders.matchPhraseQuery("name", keyword),
+//                        ScoreFunctionBuilders.weightFactorFunction(100))
+//                .scoreMode("sum")
+//                .setMinScore(10);
+//        Sort sort  = new Sort(Sort.Direction.DESC,"id");
+//        Pageable pageable = new PageRequest(start, size,sort);
+//        SearchQuery searchQuery = new NativeSearchQueryBuilder()
+//                .withPageable(pageable)
+//                .withQuery(functionScoreQueryBuilder).build();
+//
+//        Page<Product> page = productESDAO.search(searchQuery);
+//        return page.getContent();
+        return null;
     }
 
     //==========================================crud========================================

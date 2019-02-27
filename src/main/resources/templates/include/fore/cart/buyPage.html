@@ -1,8 +1,4 @@
-<!-- 模仿天猫整站springboot 教程 为how2j.cn 版权所有-->
-<!-- 本教程仅用于学习使用，切勿用于非法用途，由此引起一切后果与本站无关-->
-<!-- 供购买者学习，请勿私自传播，否则自行承担相关法律责任-->
-
-<div th:fragment="html"> 
+<div th:fragment="html" xmlns:th="http://www.w3.org/1999/xhtml">
 	<script>
 		$(function(){
 			var oiid = getUrlParms("oiid");
@@ -39,7 +35,7 @@
 	                    	var oid = result.data.oid;
 	                    	var total = result.data.total;
 	                    	location.href="alipay?oid="+oid+"&total="+total;
-	                    });	            		
+	                    });
 	            	}
 	            }
 	        });       			
@@ -133,7 +129,7 @@
 									<input type="radio" value="" checked="checked">
 									普通配送
 								</label>
-								<select class="orderItemDeliverySelect" class="form-control">
+								<select class="orderItemDeliverySelect">
 									<option>快递 免邮费</option>
 								</select>
 							</td>

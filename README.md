@@ -50,3 +50,9 @@
 2. DAO：继承JPA仓库。如果有特殊需求，需要根据其他实体对象查询该对象，增加方法findByClassName。
 
 3. 在页面跳转控制器中，如果写好跳转的HTML，页面出不来，就可以去页面查需要哪些数据了。
+
+4. 注册拦截器，然后在继承WebMvcConfigurationSupport对其进行配置。由于WebMvcConfigurerAdapter过时了，
+才使用的WebMvcConfigurationSupport。在spring中配置WebMvc时有两种方法，一种是继承WebMvcConfigurationSupport.而WebMvcConfigurer只是WebMvcConfigurationSupport的一个扩展类
+   >替换的理由是java8之后增加了接口默认的实现的用法：通过在方法名前面加default，就可以写实现。好处是：对于一些公有的方法，直接使用默认的方法，就不用在实现类中写重复代码了。
+在这里过时的原因：类A可能同时需要WebMvcConfigurer的某一个方法，如果直接继承需要实现其所有方法，于是新建一个适配器类B，实现这个接口的某个方法，其他方法实现为空，然后A继承B，这样A就只需要重写或者继承B的目的方法，实现了框架的耦合。
+但是这样需要多写一个适配器类，现在java8以后，只需要重写目的方法，而不用实现所有方法。

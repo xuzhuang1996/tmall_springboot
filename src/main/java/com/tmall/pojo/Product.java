@@ -16,6 +16,7 @@ public class Product {
     @Column(name = "id")
     private int id;
 
+    //直接从数据库中取product后的对象，是有分类的对象的，因为自动注入进去。
     @ManyToOne
     @JoinColumn(name="cid")
     private Category category;

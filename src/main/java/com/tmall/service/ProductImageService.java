@@ -1,6 +1,7 @@
 package com.tmall.service;
 
 import com.tmall.dao.ProductImageDAO;
+import com.tmall.pojo.OrderItem;
 import com.tmall.pojo.Product;
 import com.tmall.pojo.ProductImage;
 import com.tmall.util.SpringContextUtil;
@@ -48,6 +49,12 @@ public class ProductImageService {
             setFirstProdutImage(product);
     }
 
+    //每个订单项，在结账或者购物车的时候需要图片
+    public void setFirstProdutImagesOnOrderItems(List<OrderItem> ois) {
+        for (OrderItem orderItem : ois) {
+            setFirstProdutImage(orderItem.getProduct());
+        }
+    }
     //++++++++++++++++++crud++++++++++++++++++++++++++++
     public void add(ProductImage bean) {
         productImageDAO.save(bean);

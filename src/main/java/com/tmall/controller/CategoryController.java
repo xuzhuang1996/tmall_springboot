@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 //RestController:对每个方法的返回值都会直接转换为json,不需在方法前面加@ResponseBody,但是不能返回jsp,html页面，视图解析器无法解析jsp,html页面
@@ -74,4 +75,6 @@ public class CategoryController {
         BufferedImage image1= ImageUtil.change2jpg(file);
         ImageIO.write(image1,"jpg",file);
     }
+
+
 }
