@@ -5,6 +5,9 @@ import com.tmall.pojo.Category;
 import com.tmall.pojo.Product;
 import org.apache.commons.collections.ArrayStack;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,9 +19,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@CacheConfig(cacheNames="categories")
 public class CategoryService {
-
-
 
     @Autowired
     CategoryDAO categoryDAO;
@@ -28,6 +30,7 @@ public class CategoryService {
         return categoryDAO.findAll(sort);
     }
 
+    @Cacheable(key="'categories-page-'+#p0+ '-' + #p1")
     public Page<Category> listCategory(int start,int size){
         Sort sort = new Sort(Sort.Direction.DESC, "id");
         Pageable pageable = PageRequest.of(start, size, sort);//new PageRequest(firstResult, maxResults, new Sort(...))过时
@@ -35,6 +38,7 @@ public class CategoryService {
         return page;
     }
 
+    @CacheEvict(allEntries=true)
     public void add(Category bean) {
         categoryDAO.save(bean);
     }
@@ -47,6 +51,7 @@ public class CategoryService {
         categoryDAO.save(bean);
     }
 
+    @Cacheable(key="'categories-one-'+ #p0")
     public Category get(int id) {
         Optional<Category> CategoryInfoOptional = categoryDAO.findById(id);
         if (!CategoryInfoOptional.isPresent()) {

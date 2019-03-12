@@ -1,5 +1,6 @@
 package com.tmall.controller;
 
+import com.tmall.dto.Exposer;
 import com.tmall.dto.Result;
 import com.tmall.pojo.*;
 import com.tmall.service.*;
@@ -76,7 +77,7 @@ public class ForeRESTController {
 //        user.setSalt(salt);
 //        user.setPassword(encodedPassword);
 
-        userService.add(user);
+        userService.Add(user);
 
         return Result.success();
     }
@@ -184,14 +185,22 @@ public class ForeRESTController {
     public Result buy(@RequestParam("oiid")String[] oiid,HttpSession session){
         List<OrderItem> orderItems = new ArrayList<>();
         float total = 0;
+        User user =(User)  session.getAttribute("user");
+        user = userService.get(user.getId());//估计是会话中的user没有更新优惠券信息。
+
+        float coupon = 0;
+        if(user.getCoupons().size()>0)
+            coupon = user.getCoupons().get(0).getPromoteMoney();
 
         for (String strid : oiid) {
             int id = Integer.parseInt(strid);
             OrderItem oi= orderItemService.get(id);
             total +=oi.getProduct().getPromotePrice()*oi.getNumber();
+            //这里由于orderItems订单项传到前台，但是orderItems里面包括user，而user包括coupon，而coupon包括user，
+            // 因此转json进入死循环，需要remove这个属性
+            oi.getUser().setCoupons(null);
             orderItems.add(oi);
         }
-
 
         productImageService.setFirstProdutImagesOnOrderItems(orderItems);
 
@@ -199,7 +208,7 @@ public class ForeRESTController {
 
         Map<String,Object> map = new HashMap<>();
         map.put("orderItems", orderItems);
-        map.put("total", total);
+        map.put("total", total - coupon);
         return Result.success(map);
     }
 
@@ -338,5 +347,38 @@ public class ForeRESTController {
         return Result.success();
     }
 
+    //领取优惠券foregetCoupon
+    @GetMapping("foregetCoupon/{CouponId}")
+    public Object GetCoupon(HttpSession session,@PathVariable("CouponId")int CouponId) {
+        User user =(User)  session.getAttribute("user");
+        if(null==user)
+            return Result.fail("未登录");
+        userService.AddCoupon(user.getId(),CouponId);
+        return Result.success();
+    }
+
+
+    @Autowired
+    SeckillService seckillService;
+    //秒杀的控制方法
+    @PostMapping("foreseckill/{pid}/exposer")
+    public Object getExposer(@PathVariable("pid") int pid){
+        //进入这个方法进行请求暴露地址，说明此时客户端时间已经到了，将返回是否暴露地址。至于怎么判断交给服务层，控制器只写基本逻辑。
+        try {
+            Exposer exposer = seckillService.exportSeckillUrl(pid);//请求正常处理，就返回结果
+            return Result.success(exposer);
+        }catch (Exception e){//如果请求出现异常，就返回错误
+            return Result.fail(e.getMessage());
+        }
+    }
+
+    @PostMapping("foreseckill/{pid}/{md5}/execution")
+    public Object execution(@PathVariable("pid") int pid ,@PathVariable("md5") String md5){
+        //执行秒杀
+        //需要注意的是，别人可以通过浏览器拿到地址http://localhost:8888/tmall_springboot/foreseckill/87/04bd86da9e77c909bb78797ba269ad22/execution
+        //如果他改了pid即87的值，就可以秒杀其他产品了，但是如果他改了，那么md5值就不是这个了，就访问不到了啊哈哈。
+
+        return pid;
+    }
 
 }

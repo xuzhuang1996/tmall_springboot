@@ -40,6 +40,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                 "forereview",
                 "foredoreview"
 
+
         };
         HttpSession session = httpServletRequest.getSession();
         String contextPath=session.getServletContext().getContextPath();//        为/tmall_springboot

@@ -1,6 +1,4 @@
-<!-- 模仿天猫整站springboot 教程 为how2j.cn 版权所有-->
-<!-- 本教程仅用于学习使用，切勿用于非法用途，由此引起一切后果与本站无关-->
-<!-- 供购买者学习，请勿私自传播，否则自行承担相关法律责任-->
+
 
 <div th:fragment="html" xmlns:th="http://www.thymeleaf.org">
     <div class="homepageCategoryProducts">
@@ -8,7 +6,23 @@
             <div class="left-mark"></div>
             <span class="categoryTitle">{{c.name}}</span>
             <br>
-            <div class="productItem"  v-for="p,index in c.products" v-if="index<5" >
+
+            <div class="productItem"  v-for="p,index in c.products" v-if="index==0" >
+                <a :href="'SecProduct?pid='+p.id">
+                    <img width="100px" :src="'img/productSingle_middle/'+p.firstProductImage.id+'.jpg'">
+                </a>
+
+                <a class="productItemDescLink" href="'SecProduct?pid='+p.id">
+									<span class="productItemDesc">[热销]
+									{{p.name | subStringFilter(0,20)}}
+									</span>
+                </a>
+                <span class="productPrice">
+									{{p.promotePrice | formatMoneyFilter}}
+								</span>
+            </div>
+
+            <div class="productItem"  v-for="p,index in c.products" v-if="index<5 && index>0" >
                 <a :href="'product?pid='+p.id">
                     <img width="100px" :src="'img/productSingle_middle/'+p.firstProductImage.id+'.jpg'">
                 </a>

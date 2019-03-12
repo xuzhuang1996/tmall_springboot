@@ -1,0 +1,147 @@
+
+<div th:fragment="html" xmlns:th="http://www.w3.org/1999/xhtml">
+    <script>
+        $(function(){
+            var pid = getUrlParms("pid");
+            var data4Vue = {
+                uri:'foreproduct',
+                p:'',
+                restTime:new Date(),
+                startTime:'',
+                SecUrl:'',
+                category:null,
+                firstProductImage:null,
+                pvs:[],
+                reviews:[],
+                showDetail:true,
+                showReview:false,
+                user:{name:'', password:''}
+            };
+            //ViewModel
+            var vue = new Vue({
+                el: '#workingArea',
+                data: data4Vue,
+                mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
+                    linkDefaultActions();
+                    this.load();
+                    // var _this = this; //声明一个变量指向vue实例this,保证作用域一致
+                    // this.timer = setInterval(function() {
+                    //     vue.restTime = new Date();//修改数据date
+                    //     console.log(vue.restTime);
+                    // }, 1000);
+                },
+                methods: {
+                    load:function(){
+                        var url =  this.uri+"/"+pid;
+                        //所有ajax请求都有延迟，加载完后才去执行请求
+                        axios.get(url).then(function(response) {
+                            var result = response.data;
+                            vue.p=result.data.product;
+                            vue.pvs=result.data.pvs;
+                            vue.reviews=result.data.reviews;
+                            //这里应该是从服务器获取时间，不过为了简化，就不这么做了
+                            // vue.restTime = new Date(vue.p.createDate).getTime()-new Date().getTime();
+                            vue.category = vue.p.category;
+                            vue.firstProductImage = vue.p.firstProductImage;
+
+                            vue.startTime = new Date(vue.p.createDate);
+                            vue.countTime();
+
+                            vue.$nextTick(function(){
+                                imgAndInfoPageRegisterListeners(vue);
+                            })
+                        });
+                    },//end of load
+                    toggle2Detail:function(){
+                        this.showDetail=true;
+                        this.showReview=false;
+                    },
+                    toggle2Review:function(){
+                        this.showDetail=false;
+                        this.showReview=true;
+                    }
+                    ,
+                    countTime:function () {
+                        //自己加的代码，计时间交互
+                        var now = new Date();
+                        var button = $("#SecButton");
+                        if(now.getTime()<vue.startTime.getTime()){
+                            $("#tag").html("秒杀还没开启");
+                            button.attr("disabled", true);
+                            var timer = setInterval(function () {
+                                var nowDate = new Date();
+                                var startDate = vue.startTime;
+                                console.log(nowDate);
+                                if(nowDate.getTime()>=startDate.getTime()){
+                                    $("#tag").html("秒杀开始");
+                                    $("#SecButton").attr("disabled", false);
+                                    vue.handlerSeckill(pid,button);
+                                    clearInterval(timer);//既然时间到了，那就停止计时器
+                                }
+                            },1000);
+                        }else if(now.getTime()>=vue.startTime.getTime()){
+                            $("#tag").html("秒杀开始");
+                            button.attr("disabled", false);
+                            vue.handlerSeckill(pid,button);
+                        }
+                    }//end of countTime
+                    ,
+                    handlerSeckill:function (pid,button) {
+                        //用于请求最终的秒杀地址,不选择放在按钮上执行是因为，在按钮点击之前，URL就已经有了。
+                        var urlForExposer='foreseckill/'+pid+'/exposer';//ajax绝对不能写/
+                        axios.post(urlForExposer).then(function(response){
+                            var data = response.data;
+                            console.log(data);
+                            //不光代号为成功，而且还得有数据，data此时存的是：当秒杀开启时存pid的md5值，没开启时存时间
+                            if(0==data.code && data){
+                                //现在开始判断data里面是否为true
+                                if(data.data.exposed){
+                                    button.one('click', function () {
+                                        var url = "forecheckLogin";
+                                        axios.get(url).then(function(response) {
+                                            if(0==response.data.code){
+                                                //确认已经登录，
+                                                //秒杀开启，根据pid的md5值
+                                                var md5 = data.data.md5;
+                                                //之所以要用md5，因为用户可以打开浏览器控制台获取ajax请求的地址
+                                                //而这个地址是用于执行秒杀的，因此只要访问这个地址就可以重复秒杀，为此待会进行一次验证。
+                                                var KillUrl = 'foreseckill/'+pid+'/'+md5+'/execution';
+                                                axios.post(KillUrl).then(function(response) {
+                                                    console.log(response);
+                                                })
+                                                // axios.get(KillUrl).then(function(response) {
+                                                //     var oiid = response.data;
+                                                //     location.href="buy?oiid="+oiid;
+                                                // });
+                                            }
+                                            else{
+                                                $("#loginModal").modal('show');
+                                            }
+                                        });
+                                        return false;
+                                    });
+                                }else{
+                                    //秒杀结束或者没开启,懒得处理了.后面有时间，这个函数还是加参数
+                                    vue.countTime();
+                                }
+                                console.log(data);
+                            }
+                        });
+                    }
+                }
+
+            });//end of vue
+
+        });
+    </script>
+
+    <title>模仿天猫官网 -- {{p.name}}</title>
+    <div class="categoryPictureInProductPageDiv">
+        <img v-if="category!=null" class="categoryPictureInProductPage" :src="'img/category/'+category.id+'.jpg'">
+    </div>
+    <div class="productPageDiv">
+        <div th:replace="include/fore/product/SecImgAndInfo::html" ></div>
+        <div th:replace="include/fore/product/productReview::html" ></div>
+        <div th:replace="include/fore/product/productDetail::html" ></div>
+    </div>
+</div>

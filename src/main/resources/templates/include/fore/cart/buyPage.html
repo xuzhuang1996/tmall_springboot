@@ -20,9 +20,9 @@
 	                    var url =  this.uri+"/?oiid="+oiid;
 	                    axios.get(url).then(function(response) {
 	                    	var result = response.data;
-	            	        vue.total = result.data.total;
+	                    	console.log(result);
 	            	        vue.orderItems = result.data.orderItems;
-	            	        
+							vue.total = result.data.total;
 	                        vue.$nextTick(function(){
 	        	            	linkDefaultActions();
 	                        })
@@ -158,7 +158,7 @@
 		<div class="orderItemTotalSumDiv">
 			<div class="pull-right"> 
 				<span>实付款：</span>
-				<span class="orderItemTotalSumSpan">{{total|formatMoneyFilter}}</span>
+				<span class="orderItemTotalSumSpan">{{total |formatMoneyFilter}}</span>
 			</div>
 		</div>
 		<div class="submitOrderDiv">

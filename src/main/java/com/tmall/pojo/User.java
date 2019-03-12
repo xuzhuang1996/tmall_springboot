@@ -2,15 +2,12 @@
 
 package com.tmall.pojo;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -24,7 +21,21 @@ public class User {
 	
 	private String password;
 	private String name;	
-	private String salt;	
+	private String salt;
+
+	//做了一个优惠券,默认生成的关联表名称为主表表名+下划线+从表表名,详情看https://blog.csdn.net/johnf_nash/article/details/80642581
+	//不过照着这个写会出现懒加载错误，解决https://blog.csdn.net/cainiao_accp/article/details/68922320
+//	@ManyToMany(cascade=CascadeType.REFRESH, fetch = FetchType.EAGER)cascade = CascadeType.ALL
+//	@JoinTable(
+//			name="user_coupon",
+//			joinColumns=@JoinColumn(name="user_id"),
+//			inverseJoinColumns=@JoinColumn(name="coupon_id")
+//	)
+	@ManyToMany(cascade=CascadeType.REFRESH, fetch = FetchType.EAGER)
+	@JoinTable(name = "user_coupon",
+			joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(name = "coupon_id", referencedColumnName = "id"))
+	private List<Coupon> coupons;//一个用户有多个优惠券
 	
 	@Transient
 	private String anonymousName;
@@ -79,6 +90,12 @@ public class User {
 	public void setAnonymousName(String anonymousName) {
 		this.anonymousName = anonymousName;
 	}
-	
-	
+
+	public List<Coupon> getCoupons() {
+		return coupons;
+	}
+
+	public void setCoupons(List<Coupon> coupons) {
+		this.coupons = coupons;
+	}
 }

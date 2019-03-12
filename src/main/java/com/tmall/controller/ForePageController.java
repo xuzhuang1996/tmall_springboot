@@ -89,7 +89,12 @@ public class ForePageController {
         return "fore/alipay";
     }
 
-
+    //就算有参数pid，也不用管，因为是转发，因此还在URL中
+    //update 'product' set 'createDate'='2019-03-11 00:00:00'
+    @GetMapping("/SecProduct")
+    public String SecProduct( ) {
+        return "fore/SecProduct";
+    }
 
 
 

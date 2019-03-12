@@ -3,6 +3,7 @@ package com.tmall.pojo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -14,7 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "category")//对应的表名是 category
 @JsonIgnoreProperties({ "handler","hibernateLazyInitializer" })
-public class Category {
+public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)//表明自增长方式
     @Column(name = "id")//表明对应的数据库字段名。这里是从数据库中取值进行的增长

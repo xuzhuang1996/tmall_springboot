@@ -17,6 +17,10 @@ INSERT INTO category VALUES (82,'马桶');
 INSERT INTO category VALUES (83,'平板电视');
 
 
+INSERT INTO coupon VALUES (null,"许壮优惠券",10.0,null,null);
+
+
+
 INSERT INTO property VALUES (1,83,'品牌');
 INSERT INTO property VALUES (2,83,'证书状态');
 INSERT INTO property VALUES (3,83,'3C产品型号');

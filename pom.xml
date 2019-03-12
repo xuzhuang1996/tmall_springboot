@@ -32,7 +32,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- redis -->
+        <!-- 与spring Data redis有关redis -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
@@ -115,7 +115,25 @@
             <artifactId>tomcat-embed-jasper</artifactId>
             <version>8.5.23</version>
         </dependency>
+
+        <!--消息队列-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-activemq</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>5.1.4.RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
+
+
 
     <build>
         <plugins>

@@ -9,6 +9,7 @@ package com.tmall.service;
 
 import com.tmall.dao.PropertyDAO;
 import com.tmall.dao.UserDAO;
+import com.tmall.pojo.Coupon;
 import com.tmall.pojo.User;
 import com.tmall.util.SpringContextUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.*;
 
 
 @Service
@@ -29,6 +32,8 @@ public class UserService {
 	
 	@Autowired
 	UserDAO userDAO;
+	@Autowired
+	CouponService couponService;
 
 	
 	public boolean isExist(String name) {
@@ -57,9 +62,58 @@ public class UserService {
 	}
 
 	//@CacheEvict(allEntries=true)
+	@Transactional
 	public void add(User user) {
 		userDAO.save(user);
-	}	
+		//int a = 10/0;//加事务后，模拟异常后回滚。
+
+	}
+
+	public User get(int id) {
+		Optional<User> UserInfoOptional = userDAO.findById(id);
+		if (!UserInfoOptional.isPresent()) {
+			return null;
+		}
+		return UserInfoOptional.get();
+	}
+
+	public void Add(User user){
+		add(user);
+	}
+
+	@Cacheable(key=" 'users-'+ #p0 + ':coupon-'+ #p1 ",value = "UserCouponInfo" )//这里就是头空间，而不是user为头空间
+	public void AddCoupon(int userId,int couponId){
+		User user = get(userId);
+		Coupon coupon = couponService.get(couponId);
+		List<Coupon> coupons = user.getCoupons();
+		if(coupons==null){
+			user.setCoupons(new ArrayList<>());
+		}
+
+		for (int i = 0; i < coupons.size(); i++) {
+			if(coupons.get(i).getId()==couponId)
+				return;
+		}
+		coupons.add(coupon);
+		userDAO.save(user);//如果过期的时候，没有删掉，那么再添加进去就不好用了。因为很难判断是否拥有同一张优惠券
+	}
+
+	public void DeleteCoupon(int userId,int couponId){
+		User user = get(userId);
+		Coupon coupon = couponService.get(couponId);
+
+		List<Coupon> coupons = user.getCoupons();
+		if(coupons==null){
+			return;
+		}
+		int coupon_id=0;
+		for (int i = 0; i < coupons.size(); i++) {
+			if(coupons.get(i).getId()==coupon.getId())
+				coupon_id = i;
+		}
+		coupons.remove(coupon_id);
+		userDAO.save(user);
+	}
 
 }
 

@@ -40,6 +40,7 @@
 
 5. 如果categorys转json传前端时，category里面有products属性，然后就会遍历product，而product又有category属性，于是进入死循环。
 
+6. server.servlet.context-path=/tmall_springboot，如果前台请求路径http://localhost:8888/tmall_springboot/SecProduct，但是最终发现请求的就是缺tmall_springboot即http://localhost:8888/SecProduct，很有可能是前台请求路径写成了/SecProduct，正确的写法是SecProduct
 
 ## 查看用法
 1. 实体类：从Category开始，之后查看Property类的处理（多对一）。如果某些字段类中有但数据库中没有，则需要注解进行忽略。
@@ -56,3 +57,36 @@
    >替换的理由是java8之后增加了接口默认的实现的用法：通过在方法名前面加default，就可以写实现。好处是：对于一些公有的方法，直接使用默认的方法，就不用在实现类中写重复代码了。
 在这里过时的原因：类A可能同时需要WebMvcConfigurer的某一个方法，如果直接继承需要实现其所有方法，于是新建一个适配器类B，实现这个接口的某个方法，其他方法实现为空，然后A继承B，这样A就只需要重写或者继承B的目的方法，实现了框架的耦合。
 但是这样需要多写一个适配器类，现在java8以后，只需要重写目的方法，而不用实现所有方法。
+
+5. 缓存，org.springframework.cache.annotation.Cacheable;
+   - @CacheConfig(cacheNames="categories")，指明存在哪个缓存上。我这里只在目录上使用了缓存
+   - @Cacheable注解，直接使用“#参数名”或者“#p参数index”。如果多个参数，使用包含所有参数的hashCode作为key
+   - @CacheEvict是用来标注在需要清除缓存元素的方法或类上的
+   - `keys *`查询所有，或者以。。。开头的缓存
+   - springboot 默认生成RedisTemplate<Object,Object>，加@ConditionalOnMissingBean注解后，[来源](https://www.cnblogs.com/zeng1994/p/03303c805731afc9aa9c60dbbd32a323.html)。如果Spring容器中有了RedisTemplate对象了，这个自动配置的RedisTemplate不会实例化。因此我们可以直接自己写个配置类，配置RedisTemplate。
+   - Application类加注解@EnableCaching，否则配置完RedisTemplate后不会生效。
+   
+6. 多对多，https://hellokoding.com/jpa-many-to-many-relationship-mapping-example-with-spring-boot-maven-and-mysql/
+
+   维护端,在维护端进行操作（在userservice上加的redis）：
+   
+        @ManyToMany(cascade=CascadeType.REFRESH, fetch = FetchType.EAGER)//如果不写加载方式，默认懒加载，出错
+        @JoinTable(name = "user_coupon",
+                joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+                inverseJoinColumns = @JoinColumn(name = "coupon_id", referencedColumnName = "id"))
+        private Set<Coupon> coupons;//一个用户有多个优惠券
+        
+   另一端优惠券：
+   
+        @ManyToMany(mappedBy = "coupons")
+        private Set<User> users = new HashSet<>();
+        
+   之后，在spring boot中，如果在对象层次设置多对多的值，就会添加到数据库的新建表user_coupon中.
+   
+7. redis集群；
+   - 每个服务器开启redis服务后，才可以创建.开启
+   - 创建集群redis-cli --cluster create 127.0.0.1:7000 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005  --cluster-replicas 1。这些IP可以换成外机地址
+   - 如果redis没有密码，就不要在spring boot的配置文件写spring.redis.password=***。
+   - 缓存将随机写入某一个集群，因此，当没有报错的时候，去其他几个服务器找找键值在哪`redis-cli -p 7000`,`keys *`。
+   
+8. [设置过期时间](https://segmentfault.com/q/1010000015203664/a-1020000015204174)
