@@ -40,7 +40,7 @@
 
 5. 如果categorys转json传前端时，category里面有products属性，然后就会遍历product，而product又有category属性，于是进入死循环。
 
-6. server.servlet.context-path=/tmall_springboot，如果前台请求路径http://localhost:8888/tmall_springboot/SecProduct，但是最终发现请求的就是缺tmall_springboot即http://localhost:8888/SecProduct，很有可能是前台请求路径写成了/SecProduct，正确的写法是SecProduct
+6. server.servlet.context-path=/tmall_springboot，如果前台请求路径http://localhost:8888/tmall_springboot/SecProduct ，但是最终发现请求的就是缺tmall_springboot即http://localhost:8888/SecProduct ，很有可能是前台请求路径写成了/SecProduct，正确的写法是SecProduct
 
 ## 查看用法
 1. 实体类：从Category开始，之后查看Property类的处理（多对一）。如果某些字段类中有但数据库中没有，则需要注解进行忽略。
