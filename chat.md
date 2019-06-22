@@ -18,16 +18,26 @@
 1. 写服务端。这个服务端工程新建，不与原先工程在一起。客户端就在原先的工程中吧。
    - 服务器需要监听是否有客户端连接。即ListenerThread
      - 然后需要处理客户端的连接请求，handleAcceptRequest
-     - 需要处理客户端发送的数据。即ReadEventHandler
+     - 需要处理客户端发送的数据。即ReadEventHandler。客户端发送的消息分下线通知、发送给其他人的消息等，因此需要分开处理。均继承ChatMessageHandler。到底是normal还是提示，分别处理。利用@Component("normal")把普通pojo实例化到spring容器中，然后通过类名访问applicationcontext.getBean("normal")。
      
-2. 客户端。这个工程直接在user类中写。
+2. 客户端。这个工程新建。
    - 初始化客户端的socket数据。
      - 登录，作为浏览器登录的附属品。除了网站的登录cookie，也作为服务器的登录附加。
      - 退出
-   - 发送数据。这里为了数据统一管理，将发送的数据作为message，而消息又分为消息体跟消息头。
+   - 发送数据。这里为了数据统一管理，将发送服务器的数据作为message，而消息又分为消息体跟消息头。
      - 这里源码用的lombok的注解Builder，我选择直接使用链式建造者模式来编码。
    - 接受数据。同样为了管理数据，将接受的数据作为ChatResponse，即来自服务器的回应。
 3. 依赖（没处理好，主工程即原先的tmall）
    - 常见工具放入common工程
    - server工程依赖主工程的user
    - server跟主工程都依赖common
+   
+4. 开始通信
+   - 首先启动ChatServer、ChatClient。
+   - 用户A向用户B发送消息，消息先发送到服务器（流的方式），服务器解析消息（先将流转字节数组，再重新生成消息对象），获取接受对象，服务器向接受对象发送消息。
+   
+   
+5. 异常
+   - 反射异常 java.lang.InstantiationException处理。在ChatServer中的`ChatMessage message = ProtoStuffUtil.deserialize(bytes, ChatMessage.class);`中反射生成对象失败。解决：使用反射的时候编写使用class实例化其他类的对象的时候，一定要自己定义无参的构造方法
+   
+6. 查看端口占用`netstat -aon|findstr "9000"`
