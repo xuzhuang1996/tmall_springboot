@@ -13,6 +13,10 @@
 		<a href="forelogout" >退出</a>
 	</span>
 
+	<span th:if="${null!=session.user}">
+		<a href="chat" >聊天</a>
+	</span>
+
 
     <span th:if="${null==session.user}">
 		<a href="login">请登录</a>

@@ -1,14 +1,12 @@
 package com.tmall.controller;
 
+import com.tmall.chat_client.ChatClient;
 import com.tmall.dto.Exposer;
 import com.tmall.dto.Result;
 import com.tmall.pojo.*;
 import com.tmall.service.*;
 import org.apache.commons.lang.math.RandomUtils;
-import org.apache.shiro.crypto.SecureRandomNumberGenerator;
-import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
 
@@ -54,6 +52,7 @@ public class ForeRESTController {
         return categories;//注意，返回数据后，在homepage页面中ajax的数据要对应。
     }
 
+
     @PostMapping("/foreregister")
     public Result register(@RequestBody User user){
         String name =  user.getName();
@@ -94,6 +93,10 @@ public class ForeRESTController {
             return Result.fail(message);
         }else {
             session.setAttribute("user", userFact);
+            //============================================chat=================================================
+            ChatClient chatClient=new ChatClient(userFact.getName());
+            chatClient.launch();
+            //=================================================================================================
             return Result.success();
         }
     }
@@ -377,8 +380,18 @@ public class ForeRESTController {
         //执行秒杀
         //需要注意的是，别人可以通过浏览器拿到地址http://localhost:8888/tmall_springboot/foreseckill/87/04bd86da9e77c909bb78797ba269ad22/execution
         //如果他改了pid即87的值，就可以秒杀其他产品了，但是如果他改了，那么md5值就不是这个了，就访问不到了啊哈哈。
-
         return pid;
+    }
+
+
+    //========================chat======================
+    @PostMapping("/forechat")
+    public void chat(@RequestParam("receiver")String receiver,@RequestParam("content")String content,HttpSession session){
+        User user =(User)  session.getAttribute("user");
+        if(user!=null){
+            //当前进度：前台传用户名+内容过来了。后面要做的，根据user、receive、content，传数据到下一个项目。
+            //当前问题：依赖问题，UserManage归属问题，tmall想访问在线人数。如何发送消息：最好由客户端发送，解耦
+        }
     }
 
 }

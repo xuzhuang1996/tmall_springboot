@@ -7,14 +7,11 @@
 package com.tmall.service;
 
 
-import com.tmall.dao.PropertyDAO;
 import com.tmall.dao.UserDAO;
 import com.tmall.pojo.Coupon;
 import com.tmall.pojo.User;
-import com.tmall.util.SpringContextUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,7 +20,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -35,7 +34,14 @@ public class UserService {
 	@Autowired
 	CouponService couponService;
 
-	
+	//返回所有用户
+	public List<User> list() {
+		//首先创建一个 Sort 对象，表示通过 id 倒排序， 然后通过 categoryDAO进行查询
+		Sort sort = new Sort(Sort.Direction.DESC, "id");
+		return userDAO.findAll(sort);
+	}
+
+
 	public boolean isExist(String name) {
 		//UserService userService = SpringContextUtil.getBean(UserService.class);
 		User user = getByName(name);
@@ -95,7 +101,7 @@ public class UserService {
 				return;
 		}
 		coupons.add(coupon);
-		userDAO.save(user);//如果过期的时候，没有删掉，那么再添加进去就不好用了。因为很难判断是否拥有同一张优惠券
+		userDAO.save(user);//如果过期的时候，没有删掉，那么再添加进去就不好用了。因为很难判断是否拥有同一张优惠券,其实可以重写equles
 	}
 
 	public void DeleteCoupon(int userId,int couponId){

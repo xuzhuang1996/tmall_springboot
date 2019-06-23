@@ -1,12 +1,8 @@
 package com.tmall.controller;
 
 
-import com.tmall.dto.Result;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpSession;
 
@@ -35,6 +31,7 @@ public class ForePageController {
     public String login(){
         return "fore/login";//这里其实已经跳转到register.html页面，但是如果页面没有值的话，就会报解析错误。
     }
+
     @GetMapping("/forelogout")
     public String logout(HttpSession session ) {
         session.removeAttribute("user");
@@ -96,8 +93,10 @@ public class ForePageController {
         return "fore/SecProduct";
     }
 
-
-
+    @GetMapping("/chat")
+    public String chat( ) {
+        return "fore/chat";
+    }
 
 
 }

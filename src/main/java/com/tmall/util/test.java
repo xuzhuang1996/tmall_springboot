@@ -7,59 +7,69 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 //@RunWith(SpringRunner.class)
 //@SpringBootTest
+class node{
+    public node(int ii,int jj){
+        i=ii;
+        j=jj;
+    }
+    int i;
+    int j;
+}
 public class test {
     static List<String>result = new ArrayList<String>();
     static String tag;
 
-    public static boolean f(int x,int y,int z,int n){
-        int tag=6;
+    public static int numIslands(char[][] grid) {
+        Stack<node>stack=new Stack<>();
+        int x=grid.length;
+        int y=grid[0].length;
+        boolean [][]v=new boolean[x][y];
         int count=0;
-        //n-=x/6;
-        n-=y/3;
-        n-=z/2;
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                if(grid[i][j]=='1'&&!v[i][j]){
+                    stack.push(new node(i,j));
+                    v[i][j]=true;
+                    count++;
+                    while (!stack.isEmpty()){
+                        node c = stack.pop();
 
-        //x%=6;
-        y%=3;
-        z%=2;
-        if(n<=0)return true;
-        while (tag!=0){
-            if(x>0){
-                tag-=1;
-                x--;
-                if(tag==0)break;
+                        if(c.i-1>-1 && grid[c.i-1][c.j]=='1'&&!v[c.i-1][c.j])
+                        {
+                            stack.push(new node(c.i-1,c.j));
+                            v[c.i-1][c.j]=true;
+                        }
+                        if(c.i+1<x && grid[c.i+1][c.j]=='1'&&!v[c.i+1][c.j])
+                        {
+                            stack.push(new node(c.i+1,c.j));
+                            v[c.i+1][c.j]=true;
+                        }
+                        if(c.j-1>-1 && grid[c.i][c.j-1]=='1'&&!v[c.i][c.j-1])
+                        {
+                            stack.push(new node(c.i,c.j-1));
+                            v[c.i][c.j-1]=true;
+                        }
+                        if(c.j+1<y && grid[i][c.j+1]=='1'&&!v[i][c.j+1])
+                        {
+                            stack.push(new node(c.i,c.j+1));
+                            v[c.i][c.j+1]=true;
+                        }
+                    }
+                }
             }
-            if(y>0){
-                tag-=2;
-                y--;
-                if(tag==0)break;
-            }
-            if(z>0){
-                tag-=3;
-                z--;
-                if(tag==0)break;
-            }
-            count++;
-            if(count==6)break;
         }
-
-        if(tag==0)return true;
-        else return false;
-
+        return count;
     }
 
 
 
     public static void main(String[] args) {
-
-        String s="a";
-        System.out.println(s=="a");
+        System.out.println(1^1);
 //        String s = "pineapplepenapple";
 //        List<String> wordDict = new ArrayList<String>();
 //        wordDict.add("a");

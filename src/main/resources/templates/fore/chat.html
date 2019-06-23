@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head th:include="include/fore/header::html" ></head>
+<body>
+<div id="workingArea">
+    <!--<div th:replace="include/fore/top::html" ></div>-->
+    <!--<div th:replace="include/fore/search::html" ></div>-->
+
+    <div style=" text-align:center;">
+        <script>
+            $(function(){
+                var data4Vue = {
+                    uri:'forechat',
+                    message:null,
+                    send_content:"", //与下面的model一样的名字
+                    users:[],
+                    send_user:""
+
+                };
+                //ViewModel
+                var vue = new Vue({
+                    el: '#workingArea',
+                    data: data4Vue,
+                    mounted:function(){ //mounted　表示这个 Vue 对象加载成功了
+                        this.load();
+                    },
+                    methods: {
+                        load:function(){
+                            //进到这个页面首先加载所有用户数据
+                            var url =  "users_all";
+                            axios.get(url).then(function(response) {
+                                console.log(response);
+                                vue.users=response.data;//必须是vue，this不行
+                            });
+                        },
+                        send:function () {
+                            console.log(this.send_content + this.send_user);
+                            var url =  "forechat"+"?receiver="+this.send_user+"&content="+this.send_content;
+                            axios.post(url).then(function(response) {
+                                alert("OK");
+                            });
+                        }
+                    }
+                });
+            })
+        </script>
+
+        <select id="select_user" v-model="send_user">
+            <option value="" >选择发送用户</option>
+            <option v-for="user in users" >{{user.name}}</option>
+        </select>
+
+        <input type="text" class="talk_word" v-model="send_content">
+        <input type="button" value="发送" class="talk_sub" v-on:click="send()">
+    </div>
+
+    <!--<div th:replace="include/fore/chatPage::html" ></div>-->
+    <!--<div th:replace="include/fore/modal4login::html" ></div>-->
+    <!--<div th:replace="include/fore/footer::html" ></div>-->
+</div>
+</body>
+</html>

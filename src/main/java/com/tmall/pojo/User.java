@@ -2,12 +2,11 @@
 
 package com.tmall.pojo;
 
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.persistence.*;
+import java.nio.channels.SocketChannel;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "user")
@@ -61,7 +60,6 @@ public class User {
 	}
 	public String getSalt() {
 		return salt;
-		
 	}
 
 	public void setSalt(String salt) {
@@ -97,5 +95,18 @@ public class User {
 
 	public void setCoupons(List<Coupon> coupons) {
 		this.coupons = coupons;
+	}
+
+
+	//=========================chat==============================================================================
+	@Transient
+	private SocketChannel channel;//需要忽略
+
+	public SocketChannel getChannel() {
+		return channel;
+	}
+
+	public void setChannel(SocketChannel channel) {
+		this.channel = channel;
 	}
 }
