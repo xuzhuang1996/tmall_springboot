@@ -39,6 +39,9 @@
    - 用户A向用户B发送消息，消息先发送到服务器（流的方式），服务器解析消息（先将流转字节数组，再重新生成消息对象），获取接受对象，服务器向接受对象发送消息（服务器获取用户与接收方的通道channel，然后向目标通道write）。这里就需要服务器来管理用户UserManager，然后向在线用户发消息。
    - 下线同理。
    
+5. 重点：tmall与聊天项目的结合。
+   - 通过httpclient获取tmall项目的用户数据，获取时为字符串，因此需要转换——JsonUtils工具包。`List<User> list = JsonUtils.jsonToList(json,User.class);`这样就获取所有用户信息。
+   
    
 5. 异常
    - 反射异常 java.lang.InstantiationException处理。在ChatServer中的`ChatMessage message = ProtoStuffUtil.deserialize(bytes, ChatMessage.class);`中反射生成对象失败。解决：使用反射的时候编写使用class实例化其他类的对象的时候，一定要自己定义无参的构造方法
