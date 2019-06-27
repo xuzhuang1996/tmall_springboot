@@ -9,8 +9,8 @@
       - scheduleWithFixedDelay的几个参数：
         - Runnable command,要执行的任务
         - long initialDelay,首次执行的延迟时间
-        - delay ,一次执行终止和下一次执行开始之间的延迟
-        - unit,initialDelay 和 delay 参数的时间单位
+        - delay ,一次执行终止和下一次执行开始之间的延迟,getDelay()
+        - unit,initialDelay 和 delay 参数的时间单位,TimeUnit.SECONDS
       - scheduleWithFixedDelay该方法描述：创建并执行一个在给定初始延迟后首次启用的定期操作，随后，在每一次执行终止和下一次执行开始之间都存在给定的延迟。如果任务的任一执行遇到异常，就会取消后续执行。否则，只能通过执行程序的取消或终止方法来终止该任务。
       - newSingleThreadScheduledExecutor可以在构造函数中传入ThreadFactory，自己可以定义一个CacheThreadFactory,在其构造函数中传入函数的名字，以及定义异常处理等（先加入线程名）
       
