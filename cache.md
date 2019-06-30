@@ -50,4 +50,4 @@
                  finishCompletion();
              }
          }
-3. ScheduledThreadPoolExecutor是我在做缓存时使用到的线程池。对于 ScheduledThreadPoolExecutor.scheduleWithFixedDelay 和 scheduleAtFixedRate 这两个方法，其返回的 Future 只会用来取消任务，而不是得到结果。对于这两个方法来说，在 Runnable.run 方法中加 try...catch 是必须的，否则很有可能出错了却毫不知情。 
+3. ScheduledThreadPoolExecutor是我在做缓存时使用到的线程池。对于 ScheduledThreadPoolExecutor.scheduleWithFixedDelay 和 scheduleAtFixedRate 这两个方法（循环执行，获取结果只能停止循环），其返回的 Future 只会用来取消任务，而不是得到结果。对于这两个方法来说，在 Runnable.run 方法中加 try...catch 是必须的，否则很有可能出错了却毫不知情。 
