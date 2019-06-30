@@ -66,7 +66,7 @@
    - springboot 默认生成RedisTemplate<Object,Object>，加@ConditionalOnMissingBean注解后，[来源](https://www.cnblogs.com/zeng1994/p/03303c805731afc9aa9c60dbbd32a323.html)。如果Spring容器中有了RedisTemplate对象了，这个自动配置的RedisTemplate不会实例化。因此我们可以直接自己写个配置类，配置RedisTemplate。
    - Application类加注解@EnableCaching，否则配置完RedisTemplate后不会生效。
    
-6. 多对多，https://hellokoding.com/jpa-many-to-many-relationship-mapping-example-with-spring-boot-maven-and-mysql/
+6. [多对多](https://hellokoding.com/jpa-many-to-many-relationship-mapping-example-with-spring-boot-maven-and-mysql/)
 
    维护端,在维护端进行操作（在userservice上加的redis）：
    
