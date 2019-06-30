@@ -47,3 +47,12 @@
    - 反射异常 java.lang.InstantiationException处理。在ChatServer中的`ChatMessage message = ProtoStuffUtil.deserialize(bytes, ChatMessage.class);`中反射生成对象失败。解决：使用反射的时候编写使用class实例化其他类的对象的时候，一定要自己定义无参的构造方法
    
 6. 查看端口占用`netstat -aon|findstr "9000"`
+
+
+## 进度表
+1. 2019.6.23
+   - 当前进度：前台传用户名+内容过来了。后面要做的，根据user、receive、content，传数据到下一个项目。
+   - 当前问题：依赖问题，UserManage归属问题，tmall想访问在线人数。如何发送消息：最好由客户端发送，解耦
+2. 2019.6.30
+   - 当前进度：解决23号问题，原先想法是tmall接受用户发送的数据，http请求发送给ChatServer。错。这里没有网页请求。因此唯一的解决方式，将客户端合并进tmall。tmall也需要维护一个在线列表。保存用户的客户端。
+   - 另外：user登录时就将其注册进tmall以及ChatServer的用户管理中。当前完成：tmall的用户退出正在完成，下次待完成：退出时发送消息给chatServer时chatServer的处理,以及退出时自身线程是否还要关闭等等。完成这个后可以试着通信。在一台机子上登录2个用户：测试浏览器的session针对浏览器还是针对网页（因为退出时有删除session的user，因此担心同时在一个机器上登录，退出一人时会不会将所有人退出）
