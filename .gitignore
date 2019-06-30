@@ -23,3 +23,8 @@
 /nbdist/
 /.nb-gradle/
 /build/
+
+# 自定义去掉文件
+mvnw
+mvnw.cmd
+.mvn
