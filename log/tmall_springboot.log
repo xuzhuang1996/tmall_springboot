@@ -1,0 +1,198 @@
+﻿2019-06-30 14:14:47.204  INFO 3392 --- [restartedMain] com.tmall.Application                    : Starting Application on DESKTOP-F3A0USM with PID 3392 (D:\IdeaProjects\tmall_springboot\target\classes started by wd in D:\IdeaProjects\tmall_springboot)
+2019-06-30 14:14:47.208  INFO 3392 --- [restartedMain] com.tmall.Application                    : No active profile set, falling back to default profiles: default
+2019-06-30 14:14:47.254  INFO 3392 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2019-06-30 14:14:47.254  INFO 3392 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2019-06-30 14:14:48.016  INFO 3392 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-06-30 14:14:48.016  INFO 3392 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-06-30 14:14:48.046  INFO 3392 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.tmall.dao.CategoryDAO.
+2019-06-30 14:14:48.046  INFO 3392 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.tmall.dao.CouponDAO.
+2019-06-30 14:14:48.046  INFO 3392 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.tmall.dao.OrderDAO.
+2019-06-30 14:14:48.056  INFO 3392 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.tmall.dao.OrderItemDAO.
+2019-06-30 14:14:48.056  INFO 3392 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.tmall.dao.ProductDAO.
+2019-06-30 14:14:48.056  INFO 3392 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.tmall.dao.ProductImageDAO.
+2019-06-30 14:14:48.056  INFO 3392 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.tmall.dao.PropertyDAO.
+2019-06-30 14:14:48.056  INFO 3392 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.tmall.dao.PropertyValueDAO.
+2019-06-30 14:14:48.056  INFO 3392 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.tmall.dao.ReviewDAO.
+2019-06-30 14:14:48.056  INFO 3392 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.tmall.dao.UserDAO.
+2019-06-30 14:14:48.056  INFO 3392 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 40ms. Found 0 repository interfaces.
+2019-06-30 14:14:48.066  INFO 3392 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-06-30 14:14:48.066  INFO 3392 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-06-30 14:14:48.111  INFO 3392 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 45ms. Found 10 repository interfaces.
+2019-06-30 14:14:48.116  INFO 3392 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-06-30 14:14:48.121  INFO 3392 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-06-30 14:14:48.131  INFO 3392 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.tmall.dao.CategoryDAO.
+2019-06-30 14:14:48.131  INFO 3392 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.tmall.dao.CouponDAO.
+2019-06-30 14:14:48.131  INFO 3392 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.tmall.dao.OrderDAO.
+2019-06-30 14:14:48.131  INFO 3392 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.tmall.dao.OrderItemDAO.
+2019-06-30 14:14:48.131  INFO 3392 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.tmall.dao.ProductDAO.
+2019-06-30 14:14:48.131  INFO 3392 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.tmall.dao.ProductImageDAO.
+2019-06-30 14:14:48.131  INFO 3392 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.tmall.dao.PropertyDAO.
+2019-06-30 14:14:48.131  INFO 3392 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.tmall.dao.PropertyValueDAO.
+2019-06-30 14:14:48.131  INFO 3392 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.tmall.dao.ReviewDAO.
+2019-06-30 14:14:48.131  INFO 3392 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.tmall.dao.UserDAO.
+2019-06-30 14:14:48.131  INFO 3392 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 5ms. Found 0 repository interfaces.
+2019-06-30 14:14:48.406  INFO 3392 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$1fc43750] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-06-30 14:14:48.436  INFO 3392 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'spring.redis-org.springframework.boot.autoconfigure.data.redis.RedisProperties' of type [org.springframework.boot.autoconfigure.data.redis.RedisProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-06-30 14:14:48.436  INFO 3392 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.boot.autoconfigure.data.redis.LettuceConnectionConfiguration' of type [org.springframework.boot.autoconfigure.data.redis.LettuceConnectionConfiguration$$EnhancerBySpringCGLIB$$34ddf59a] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-06-30 14:14:48.496  INFO 3392 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'lettuceClientResources' of type [io.lettuce.core.resource.DefaultClientResources] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-06-30 14:14:48.541  INFO 3392 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'redisConnectionFactory' of type [org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-06-30 14:14:48.541  INFO 3392 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'redisConfig' of type [com.tmall.config.RedisConfig$$EnhancerBySpringCGLIB$$aa3a25f9] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-06-30 14:14:48.861  INFO 3392 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8888 (http)
+2019-06-30 14:14:48.876  INFO 3392 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-06-30 14:14:48.876  INFO 3392 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.14]
+2019-06-30 14:14:48.876  INFO 3392 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk1.8.0_191\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;D:\apache-maven-3.6.0-bin\apache-maven-3.6.0\bin;E:\Program Files\Redis\;D:\mysql-8.0.11-winx64\bin;D:\soft\nginx-1.14.2;D:\soft\solr-7.6.0\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\MapGIS 10\program;D:\Program Files\PuTTY\;C:\Program Files\nodejs\;D:\hadoop-3.2.0\\bin;C:\Program Files\SourceGear\Common\DiffMerge\;C:\Program Files\erl7.1\bin;C:\Users\wd\AppData\Local\Programs\Python\Python35\Scripts\;C:\Users\wd\AppData\Local\Programs\Python\Python35\;C:\Users\wd\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\IntelliJ IDEA 2018.3.1\bin;;C:\Users\wd\AppData\Roaming\npm;C:\Program Files\JetBrains\WebStorm 2018.3.5\bin;;C:\Program Files\JetBrains\PyCharm Community Edition 2018.3.5\bin;;.]
+2019-06-30 14:14:49.116  INFO 3392 --- [restartedMain] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2019-06-30 14:14:49.126  INFO 3392 --- [restartedMain] o.a.c.c.C.[.[.[/tmall_springboot]        : Initializing Spring embedded WebApplicationContext
+2019-06-30 14:14:49.126  INFO 3392 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1872 ms
+2019-06-30 14:14:49.246  INFO 3392 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-06-30 14:14:49.326  INFO 3392 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-06-30 14:14:49.366  INFO 3392 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2019-06-30 14:14:49.431  INFO 3392 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate Core {5.3.7.Final}
+2019-06-30 14:14:49.431  INFO 3392 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2019-06-30 14:14:49.526  INFO 3392 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2019-06-30 14:14:49.636  INFO 3392 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2019-06-30 14:14:50.726  INFO 3392 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-06-30 14:14:50.756  INFO 3392 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2019-06-30 14:14:51.311  INFO 3392 --- [restartedMain] io.lettuce.core.EpollProvider            : Starting without optional epoll library
+2019-06-30 14:14:51.316  INFO 3392 --- [restartedMain] io.lettuce.core.KqueueProvider           : Starting without optional kqueue library
+2019-06-30 14:14:51.741  INFO 3392 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-06-30 14:14:51.776  WARN 3392 --- [restartedMain] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2019-06-30 14:14:51.846  WARN 3392 --- [restartedMain] org.thymeleaf.templatemode.TemplateMode  : [THYMELEAF][restartedMain] Template Mode 'LEGACYHTML5' is deprecated. Using Template Mode 'HTML' instead.
+2019-06-30 14:14:52.391  INFO 3392 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8888 (http) with context path '/tmall_springboot'
+2019-06-30 14:14:52.391  INFO 3392 --- [restartedMain] com.tmall.Application                    : Started Application in 5.557 seconds (JVM running for 6.297)
+2019-06-30 14:14:59.310  INFO 3392 --- [http-nio-8888-exec-1] o.a.c.c.C.[.[.[/tmall_springboot]        : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-06-30 14:14:59.311  INFO 3392 --- [http-nio-8888-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2019-06-30 14:14:59.318  INFO 3392 --- [http-nio-8888-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 7 ms
+2019-06-30 14:14:59.353 ERROR 3392 --- [http-nio-8888-exec-1] c.t.exception.GloabalExceptionHandler    : 全局异常类捕获
+2019-06-30 14:14:59.357 ERROR 3392 --- [http-nio-8888-exec-1] c.t.exception.GloabalExceptionHandler    : / by zero
+
+java.lang.ArithmeticException: / by zero
+	at com.tmall.cache.AutoReloadCache.getDelay(AutoReloadCache.java:23) ~[classes/:na]
+	at com.tmall.cache.AutoReloadCache.checkAndStartTimer(AutoReloadCache.java:51) ~[classes/:na]
+	at com.tmall.cache.AutoReloadCache.get(AutoReloadCache.java:29) ~[classes/:na]
+	at com.tmall.cache.cacheServiceImpl.CacheServiceImpl.getListCategory(CacheServiceImpl.java:30) ~[classes/:na]
+	at com.tmall.service.CategoryService.list(CategoryService.java:29) ~[classes/:na]
+	at com.tmall.service.CategoryService$$FastClassBySpringCGLIB$$1032bb6b.invoke(<generated>) ~[classes/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218) ~[spring-core-5.1.4.RELEASE.jar:5.1.4.RELEASE]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:684) ~[spring-aop-5.1.4.RELEASE.jar:5.1.4.RELEASE]
+	at com.tmall.service.CategoryService$$EnhancerBySpringCGLIB$$d6063bd6.list(<generated>) ~[classes/:na]
+	at com.tmall.interceptor.OtherInterceptor.postHandle(OtherInterceptor.java:49) ~[classes/:na]
+	at org.springframework.web.servlet.HandlerExecutionChain.applyPostHandle(HandlerExecutionChain.java:156) ~[spring-webmvc-5.1.4.RELEASE.jar:5.1.4.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1045) ~[spring-webmvc-5.1.4.RELEASE.jar:5.1.4.RELEASE]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:942) ~[spring-webmvc-5.1.4.RELEASE.jar:5.1.4.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1005) [spring-webmvc-5.1.4.RELEASE.jar:5.1.4.RELEASE]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:897) [spring-webmvc-5.1.4.RELEASE.jar:5.1.4.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:634) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:882) [spring-webmvc-5.1.4.RELEASE.jar:5.1.4.RELEASE]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:741) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) [tomcat-embed-websocket-9.0.14.jar:9.0.14]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:99) [spring-web-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107) [spring-web-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:92) [spring-web-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107) [spring-web-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at org.springframework.web.filter.HiddenHttpMethodFilter.doFilterInternal(HiddenHttpMethodFilter.java:93) [spring-web-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107) [spring-web-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:200) [spring-web-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107) [spring-web-5.1.6.RELEASE.jar:5.1.6.RELEASE]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:199) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:96) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:490) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:139) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:343) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:408) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:66) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:834) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1417) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149) [na:1.8.0_191]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624) [na:1.8.0_191]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) [tomcat-embed-core-9.0.14.jar:9.0.14]
+	at java.lang.Thread.run(Thread.java:748) [na:1.8.0_191]
+
+2019-06-30 14:14:59.375  WARN 3392 --- [http-nio-8888-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [java.lang.ArithmeticException: / by zero]
+2019-06-30 14:26:07.359  INFO 8696 --- [restartedMain] com.tmall.Application                    : Starting Application on DESKTOP-F3A0USM with PID 8696 (D:\IdeaProjects\tmall_springboot\target\classes started by wd in D:\IdeaProjects\tmall_springboot)
+2019-06-30 14:26:07.359  INFO 8696 --- [restartedMain] com.tmall.Application                    : No active profile set, falling back to default profiles: default
+2019-06-30 14:26:07.404  INFO 8696 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2019-06-30 14:26:07.404  INFO 8696 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2019-06-30 14:26:08.229  INFO 8696 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-06-30 14:26:08.234  INFO 8696 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-06-30 14:26:08.264  INFO 8696 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.tmall.dao.CategoryDAO.
+2019-06-30 14:26:08.264  INFO 8696 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.tmall.dao.CouponDAO.
+2019-06-30 14:26:08.274  INFO 8696 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.tmall.dao.OrderDAO.
+2019-06-30 14:26:08.274  INFO 8696 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.tmall.dao.OrderItemDAO.
+2019-06-30 14:26:08.274  INFO 8696 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.tmall.dao.ProductDAO.
+2019-06-30 14:26:08.277  INFO 8696 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.tmall.dao.ProductImageDAO.
+2019-06-30 14:26:08.277  INFO 8696 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.tmall.dao.PropertyDAO.
+2019-06-30 14:26:08.277  INFO 8696 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.tmall.dao.PropertyValueDAO.
+2019-06-30 14:26:08.277  INFO 8696 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.tmall.dao.ReviewDAO.
+2019-06-30 14:26:08.277  INFO 8696 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.tmall.dao.UserDAO.
+2019-06-30 14:26:08.277  INFO 8696 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 43ms. Found 0 repository interfaces.
+2019-06-30 14:26:08.284  INFO 8696 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-06-30 14:26:08.284  INFO 8696 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-06-30 14:26:08.334  INFO 8696 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 50ms. Found 10 repository interfaces.
+2019-06-30 14:26:08.339  INFO 8696 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2019-06-30 14:26:08.344  INFO 8696 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-06-30 14:26:08.354  INFO 8696 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.tmall.dao.CategoryDAO.
+2019-06-30 14:26:08.354  INFO 8696 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.tmall.dao.CouponDAO.
+2019-06-30 14:26:08.354  INFO 8696 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.tmall.dao.OrderDAO.
+2019-06-30 14:26:08.354  INFO 8696 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.tmall.dao.OrderItemDAO.
+2019-06-30 14:26:08.354  INFO 8696 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.tmall.dao.ProductDAO.
+2019-06-30 14:26:08.354  INFO 8696 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.tmall.dao.ProductImageDAO.
+2019-06-30 14:26:08.354  INFO 8696 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.tmall.dao.PropertyDAO.
+2019-06-30 14:26:08.359  INFO 8696 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.tmall.dao.PropertyValueDAO.
+2019-06-30 14:26:08.359  INFO 8696 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.tmall.dao.ReviewDAO.
+2019-06-30 14:26:08.359  INFO 8696 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.tmall.dao.UserDAO.
+2019-06-30 14:26:08.359  INFO 8696 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 10ms. Found 0 repository interfaces.
+2019-06-30 14:26:08.634  INFO 8696 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$c6a2b2d] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-06-30 14:26:08.664  INFO 8696 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'spring.redis-org.springframework.boot.autoconfigure.data.redis.RedisProperties' of type [org.springframework.boot.autoconfigure.data.redis.RedisProperties] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-06-30 14:26:08.664  INFO 8696 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.boot.autoconfigure.data.redis.LettuceConnectionConfiguration' of type [org.springframework.boot.autoconfigure.data.redis.LettuceConnectionConfiguration$$EnhancerBySpringCGLIB$$2183e977] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-06-30 14:26:08.714  INFO 8696 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'lettuceClientResources' of type [io.lettuce.core.resource.DefaultClientResources] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-06-30 14:26:08.754  INFO 8696 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'redisConnectionFactory' of type [org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-06-30 14:26:08.764  INFO 8696 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'redisConfig' of type [com.tmall.config.RedisConfig$$EnhancerBySpringCGLIB$$96e019d6] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-06-30 14:26:09.084  INFO 8696 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8888 (http)
+2019-06-30 14:26:09.109  INFO 8696 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-06-30 14:26:09.109  INFO 8696 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.14]
+2019-06-30 14:26:09.114  INFO 8696 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk1.8.0_191\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;D:\apache-maven-3.6.0-bin\apache-maven-3.6.0\bin;E:\Program Files\Redis\;D:\mysql-8.0.11-winx64\bin;D:\soft\nginx-1.14.2;D:\soft\solr-7.6.0\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\MapGIS 10\program;D:\Program Files\PuTTY\;C:\Program Files\nodejs\;D:\hadoop-3.2.0\\bin;C:\Program Files\SourceGear\Common\DiffMerge\;C:\Program Files\erl7.1\bin;C:\Users\wd\AppData\Local\Programs\Python\Python35\Scripts\;C:\Users\wd\AppData\Local\Programs\Python\Python35\;C:\Users\wd\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\IntelliJ IDEA 2018.3.1\bin;;C:\Users\wd\AppData\Roaming\npm;C:\Program Files\JetBrains\WebStorm 2018.3.5\bin;;C:\Program Files\JetBrains\PyCharm Community Edition 2018.3.5\bin;;.]
+2019-06-30 14:26:09.304  INFO 8696 --- [restartedMain] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2019-06-30 14:26:09.314  INFO 8696 --- [restartedMain] o.a.c.c.C.[.[.[/tmall_springboot]        : Initializing Spring embedded WebApplicationContext
+2019-06-30 14:26:09.314  INFO 8696 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1910 ms
+2019-06-30 14:26:09.439  INFO 8696 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-06-30 14:26:09.534  INFO 8696 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-06-30 14:26:09.574  INFO 8696 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2019-06-30 14:26:09.619  INFO 8696 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate Core {5.3.7.Final}
+2019-06-30 14:26:09.619  INFO 8696 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2019-06-30 14:26:09.709  INFO 8696 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2019-06-30 14:26:09.828  INFO 8696 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2019-06-30 14:26:11.079  INFO 8696 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-06-30 14:26:11.114  INFO 8696 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2019-06-30 14:26:11.684  INFO 8696 --- [restartedMain] io.lettuce.core.EpollProvider            : Starting without optional epoll library
+2019-06-30 14:26:11.684  INFO 8696 --- [restartedMain] io.lettuce.core.KqueueProvider           : Starting without optional kqueue library
+2019-06-30 14:26:12.134  INFO 8696 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-06-30 14:26:12.166  WARN 8696 --- [restartedMain] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2019-06-30 14:26:12.240  WARN 8696 --- [restartedMain] org.thymeleaf.templatemode.TemplateMode  : [THYMELEAF][restartedMain] Template Mode 'LEGACYHTML5' is deprecated. Using Template Mode 'HTML' instead.
+2019-06-30 14:26:12.789  INFO 8696 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8888 (http) with context path '/tmall_springboot'
+2019-06-30 14:26:12.791  INFO 8696 --- [restartedMain] com.tmall.Application                    : Started Application in 5.767 seconds (JVM running for 6.46)
+2019-06-30 14:26:12.942  INFO 8696 --- [http-nio-8888-exec-1] o.a.c.c.C.[.[.[/tmall_springboot]        : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-06-30 14:26:12.943  INFO 8696 --- [http-nio-8888-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2019-06-30 14:26:12.950  INFO 8696 --- [http-nio-8888-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 7 ms
+2019-06-30 14:26:12.983  INFO 8696 --- [AutoReloadCacheThread0] com.tmall.cache.AutoReloadCache          : AutoReloadCacheThread0:重新读取数据库，更新缓存
+2019-06-30 14:26:13.017  INFO 8696 --- [AutoReloadCacheThread0] o.h.h.i.QueryTranslatorFactoryInitiator  : HHH000397: Using ASTQueryTranslatorFactory
+2019-06-30 14:27:13.110  INFO 8696 --- [AutoReloadCacheThread0] com.tmall.cache.AutoReloadCache          : AutoReloadCacheThread0:重新读取数据库，更新缓存

@@ -1,9 +1,9 @@
 package com.tmall.service;
 
+import com.tmall.cache.CacheService;
 import com.tmall.dao.CategoryDAO;
 import com.tmall.pojo.Category;
 import com.tmall.pojo.Product;
-import org.apache.commons.collections.ArrayStack;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -14,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,11 +22,14 @@ import java.util.Optional;
 public class CategoryService {
 
     @Autowired
+    CacheService cacheService;
+    @Autowired
     CategoryDAO categoryDAO;
     public List<Category> list() {
+        return cacheService.getListCategory();
         //首先创建一个 Sort 对象，表示通过 id 倒排序， 然后通过 categoryDAO进行查询
-        Sort sort = new Sort(Sort.Direction.DESC, "id");
-        return categoryDAO.findAll(sort);
+//        Sort sort = new Sort(Sort.Direction.DESC, "id");
+//        return categoryDAO.findAll(sort);
     }
 
     @Cacheable(key="'categories-page-'+#p0+ '-' + #p1")
