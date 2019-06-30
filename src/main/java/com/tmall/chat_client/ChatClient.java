@@ -20,6 +20,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 
+
 public class ChatClient {
     //=========================================Chat=====================================================
     private String username;
@@ -39,8 +40,8 @@ public class ChatClient {
         new Thread(listener).start();
     }
 
-    public ChatClient(String username) {
-        this.username = username;
+    public ChatClient(String s) {
+        this.username = s;
         this.initNetWork();
     }
 
@@ -67,7 +68,8 @@ public class ChatClient {
         }
     }
 
-    private void disConnect() {
+    //我认为不应该为私有
+    public void disConnect() {
         try {
             logout();
             if (!isConnected) {

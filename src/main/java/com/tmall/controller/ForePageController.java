@@ -1,6 +1,9 @@
 package com.tmall.controller;
 
 
+import com.tmall.chat_client.ChatClient;
+import com.tmall.chat_client.ClientManage;
+import com.tmall.pojo.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -34,6 +37,11 @@ public class ForePageController {
 
     @GetMapping("/forelogout")
     public String logout(HttpSession session ) {
+        //============================================chat=================================================
+        User user =(User)  session.getAttribute("user");
+        ChatClient chatClient = ClientManage.map.remove(user.getName());
+        chatClient.disConnect();
+        //=================================================================================================
         session.removeAttribute("user");
         return "redirect:home";
     }

@@ -10,11 +10,11 @@ public class ChatClientApplication {
 
         SpringApplication.run(ChatClientApplication.class, args);
 
-        ChatClient chatClient=new ChatClient("x");
-        ChatClient chatClient2=new ChatClient("xx");
-        chatClient.launch();
-        chatClient2.launch();
-        chatClient.send("@xx:hello");
+//        ChatClient chatClient=new ChatClient("x");
+//        ChatClient chatClient2=new ChatClient("xx");
+//        chatClient.launch();
+//        chatClient2.launch();
+//        chatClient.send("@xx:hello");
     }
 
 }

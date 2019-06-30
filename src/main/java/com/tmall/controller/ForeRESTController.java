@@ -1,6 +1,7 @@
 package com.tmall.controller;
 
 import com.tmall.chat_client.ChatClient;
+import com.tmall.chat_client.ClientManage;
 import com.tmall.dto.Exposer;
 import com.tmall.dto.Result;
 import com.tmall.pojo.*;
@@ -96,6 +97,7 @@ public class ForeRESTController {
             //============================================chat=================================================
             ChatClient chatClient=new ChatClient(userFact.getName());
             chatClient.launch();
+            ClientManage.map.put(userFact.getName(),chatClient);
             //=================================================================================================
             return Result.success();
         }
@@ -391,6 +393,11 @@ public class ForeRESTController {
         if(user!=null){
             //当前进度：前台传用户名+内容过来了。后面要做的，根据user、receive、content，传数据到下一个项目。
             //当前问题：依赖问题，UserManage归属问题，tmall想访问在线人数。如何发送消息：最好由客户端发送，解耦
+            //解决：tmall接受用户发送的数据，http请求发送给ChatServer。错。这里没有网页请求。因此唯一的解决方式，将客户端合并进tmall
+            //另外，tmall也需要维护一个在线列表。保存用户的客户端
+            ChatClient chatClient=ClientManage.map.get(user.getName());
+            //客户端对象直接从管理员的map中取
+            chatClient.send("@"+receiver+":"+content);
         }
     }
 
