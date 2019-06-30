@@ -93,3 +93,8 @@
 9. [用户聊天功能](chat.md) 
 10. [不用redis实现缓存](cache.md)
 11. 加日志。为了将所有错误信息输出到日志，就在定义的全局异常处理类中加入日志对象，进行打印。但是对于某些另开的线程，如果无法处理异常，就自行用try进行捕获，然后输出。一般用法就是在配置文件加日志地点，然后用`private static Logger logger =LoggerFactory.getLogger(AutoReloadCache.class);`，但是如果懒得每个都写对象，可以考虑加@Slf4j，引用自lombok.extern.slf4j.Slf4j;然后将为被注解的类生成一个log对象。可以见别人chat的工程。
+12. .gitignore在已经push后，想重新添加忽略文件：
+    
+        git rm -r --cached .
+        git add .
+        git commit -m 'update .gitignore'
