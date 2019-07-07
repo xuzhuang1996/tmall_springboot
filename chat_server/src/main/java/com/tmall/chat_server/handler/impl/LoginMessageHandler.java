@@ -32,9 +32,8 @@ public class LoginMessageHandler extends ChatMessageHandler {
         ChatMessageHeader header = message.getHeader();
         String username = header.getSender();
         //执行注册，如果注册成功，就返回客户端成功的消息
-        if(onlineUsers.get()>3)
-            System.out.println("8");
-        if (userManager.login(clientChannel, username)) {
+        //onlineUsers.incrementAndGet()就是在线用户+1
+        if (userManager.loginHandle(clientChannel, username)) {
             byte[] response_user = ProtoStuffUtil.serialize(
                     new ChatResponse(
                              new ChatResponseHeader.ChatResponseBuilder()//header
@@ -45,13 +44,14 @@ public class LoginMessageHandler extends ChatMessageHandler {
                              String.format(PromptMsgProperty.LOGIN_SUCCESS,onlineUsers.incrementAndGet()).getBytes(PromptMsgProperty.charset)//body
                     )
             );
+            //String formatted = String.format("%s今年%d岁。", "小李", 30); // "小李今年30岁。".而PromptMsgProperty.LOGIN_BROADCAST这类消息都有一个占位符
             byte[] loginBroadcast = ProtoStuffUtil.serialize(
                     new ChatResponse(
                             new ChatResponseHeader.ChatResponseBuilder()//header
                                     .sender(SYSTEM_SENDER)
                                     .timestamp(message.getHeader().getTimestamp())
                                     .type_response(ResponseType.NORMAL).build(),
-                            String.format(PromptMsgProperty.LOGIN_BROADCAST,onlineUsers.incrementAndGet()).getBytes(PromptMsgProperty.charset)//body
+                            String.format(PromptMsgProperty.LOGIN_BROADCAST,message.getHeader().getSender()).getBytes(PromptMsgProperty.charset)//body
                     )
             );
             //消息做好后，准备发送

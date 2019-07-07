@@ -102,22 +102,23 @@ public class ChatClient {
         }
     }
 
+    //下线的时候发送到服务器的管理员。管理员进行下线
     private void logout() {
         if (!isLogin) {
             return;
         }
         System.out.println("客户端发送下线请求");
-//		Message message = new Message(
-//				MessageHeader.builder()
-//						.type(MessageType.LOGOUT)
-//						.sender(username)
-//						.timestamp(System.currentTimeMillis())
-//						.build(), null);
-//		try {
-//			clientChannel.write(ByteBuffer.wrap(ProtoStuffUtil.serialize(message)));
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		ChatMessage message = new ChatMessage(
+				new ChatMessageHeader.ChatBuilder()
+						.type_message(MessageType.LOGOUT)
+						.sender(username)
+						.timestamp(System.currentTimeMillis())
+						.build(), null);
+		try {
+			clientChannel.write(ByteBuffer.wrap(ProtoStuffUtil.serialize(message)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 
     //发送信息
@@ -196,7 +197,6 @@ public class ChatClient {
         }
 
         private void handleResponse(ChatResponse response) {
-//            System.out.println(response);
             ChatResponseHeader header = response.getHeader();
             switch (header.getType()) {
                 case PROMPT://PROMPT提示

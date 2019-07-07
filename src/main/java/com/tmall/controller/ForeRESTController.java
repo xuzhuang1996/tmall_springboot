@@ -95,9 +95,9 @@ public class ForeRESTController {
         }else {
             session.setAttribute("user", userFact);
             //============================================chat=================================================
-            ChatClient chatClient=new ChatClient(userFact.getName());
-            chatClient.launch();
-            ClientManage.map.put(userFact.getName(),chatClient);
+            ChatClient chatClient=new ChatClient(userFact.getName());//新建客户端的时候就执行了initNetWork，即连接服务器后，开始向服务器发送登录请求。
+            chatClient.launch();//即开始接受其他人的消息。线程启动
+            ClientManage.map.put(userFact.getName(),chatClient);//这里应该是等到收到登录成功的消息才注册进map。懒得写了
             //=================================================================================================
             return Result.success();
         }

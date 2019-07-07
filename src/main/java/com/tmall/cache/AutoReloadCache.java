@@ -20,7 +20,7 @@ public abstract class AutoReloadCache<K, V> {
     protected abstract void reload();//具体加载逻辑，即加载什么类型的数据。由具体子类完成
     //默认间隔多少次从数据库取数据.子类可以根据具体加载对象，重写该方法来设置间隔加载时间。
     protected long getDelay(){
-        return TimeUnit.MINUTES.toSeconds(1);
+        return TimeUnit.MINUTES.toSeconds(1000000);
     }
     //获取缓存
     public V get(K key){

@@ -34,7 +34,7 @@ public class ChatServer {
     private Selector selector;
     //线程池
     private ExecutorService readPool;
-    private AtomicInteger onlineUsers;
+    private AtomicInteger onlineUsersNumber;
     private ListenerThread listenerThread;
 
     @Autowired
@@ -113,9 +113,16 @@ public class ChatServer {
         @Override
         public void run() {
 
-            while (true) {
+            while (!Thread.currentThread().isInterrupted()) {
                 try {
                     int size;
+                    //这里原先没有。我认为是：当客户端退出时，忘了关闭读取线程，因此需要单独关闭
+                    if(!client.isConnected())
+                    {
+                        Thread.currentThread().interrupt();
+                        System.out.println("读取线程正在关闭");
+                        continue;
+                    }
                     if (!((size = client.read(buf)) > 0)) break;//返回值大于0表示还没读完，=0即读完，就退出while
                     buf.flip();
                     baos.write(buf.array(), 0, size);
@@ -143,7 +150,7 @@ public class ChatServer {
                         if(handler==null){
                             System.out.println("获取bean失败，即获取消息处理对象失败");
                         }
-                        handler.handle(message, selector, key, onlineUsers);
+                        handler.handle(message, selector, key, onlineUsersNumber);
                     } catch (InterruptedException e) {
                         interruptedExceptionHandler.handle(client, message);
                         e.printStackTrace();
@@ -180,7 +187,7 @@ public class ChatServer {
             //线程池，CallerRunsPolicy饱和策略，即用调用者的线程执行任务，ArrayBlockingQueue阻塞队列，存放来不及执行的线程
             this.readPool = new ThreadPoolExecutor(5, 10, 1000, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(10), new ThreadPoolExecutor.CallerRunsPolicy());
             this.listenerThread = new ListenerThread();
-            this.onlineUsers = new AtomicInteger(0);
+            this.onlineUsersNumber = new AtomicInteger(0);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -41,6 +41,7 @@ public class ForePageController {
         User user =(User)  session.getAttribute("user");
         ChatClient chatClient = ClientManage.map.remove(user.getName());
         chatClient.disConnect();
+
         //=================================================================================================
         session.removeAttribute("user");
         return "redirect:home";
