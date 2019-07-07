@@ -35,13 +35,16 @@
    - server跟主工程都依赖common
    
 4. 开始通信
-   - 首先启动ChatServer、ChatClient。
-   - 用户AB上线，发送上线消息给服务器，然后服务器解析消息后，用LoginMessageHandler将用户注册到UserManager。注册成功后服务器返回消息，服务器的消息统一用PromptMsgProperty来表示消息体。
+   - 首先启动ChatServer、tmall。
+   - 客户端：用户AB上线，即在网页主页登录，输入用户信息，登录时执行了initNetWork，连接ChatServer服务器后就发送上线消息给ChatServer服务器，然后服务器解析消息后，用LoginMessageHandler将用户注册到UserManager。注册成功后服务器返回登录成功的消息，以及广播上线消息，这里服务器的消息统一用PromptMsgProperty来表示消息体。客户端登录成功后将注册到tmall的manager下，便于发送消息使用`ClientManage.map.put(userFact.getName(),chatClient);`
+   - 服务器：ListenerThread一直监听请求，handleAcceptRequest()函数处理客户端连接，当客户端连接到服务器后服务器将监听read事件。然后服务器收到用户上线请求消息，转到ReadEventHandler开始读取消息内容，SelectionKey是传入的用户的通道对象，服务器的manager将该通道SelectionKey.channel注册到onlineUsers，用于后面发目标用户消息，直接从里面取通道进行传递。处理完用户的消息后，开始respose,首先是返回用户登录成功，然后用户数onlineUsers++，同时广播哪位用户上线,这里用到了String.format。到此登录结束。
+      > 比如枚举中`LOGIN_BROADCAST = "%s用户已上线";`,这里`String.format(LOGIN_BROADCAST,name)`。`%s`就是字符串占位符。
    - 用户A向用户B发送消息，消息先发送到服务器（流的方式），服务器解析消息（先将流转字节数组，再重新生成消息对象），获取接受对象，服务器向接受对象发送消息（服务器获取用户与接收方的通道channel，然后向目标通道write）。这里就需要服务器来管理用户UserManager，然后向在线用户发消息。
-   - 下线同理。
+   - 下线时，需要注意线程的关闭，比如服务器专给客户端某个key开的读取线程。需要关闭这个线程，否则报错ClosedChannelException。
    
-5. 重点：tmall与聊天项目的结合。
-   - 通过httpclient获取tmall项目的用户数据，获取时为字符串，因此需要转换——JsonUtils工具包。`List<User> list = JsonUtils.jsonToList(json,User.class);`这样就获取所有用户信息。
+5. 难点：tmall与聊天项目的结合。
+   - chatServer需要所有用户信息，但是两个不同工程数据不能共享，于是通过httpclient获取tmall项目的用户数据，获取时为字符串，因此需要转换——JsonUtils工具包。`List<User> list = JsonUtils.jsonToList(json,User.class);`这样就获取所有用户信息。
+   - 服务器自己有一个manager，但是两个工程不同，如何从服务器manager拿到对象呢？干脆直接新建一个。
 6. 亮点：
    - 服务器需要处理几种不同类型的客户端消息：于是在消息中加入消息头。里面设置消息的类型。于是采用反射的方式，先根据消息类型，拿到对应处理类的类名，调用对应方法。如果没有spring 就反射，有就直接根据类名拿对象。
    
@@ -60,3 +63,4 @@
    - 当前进度：解决23号问题，原先想法是tmall接受用户发送的数据，http请求发送给ChatServer。错。这里没有网页请求。因此唯一的解决方式，将客户端合并进tmall。tmall也需要维护一个在线列表。保存用户的客户端。
    - 另外：user登录时就将其注册进tmall以及ChatServer的用户管理中。当前完成：tmall的用户退出正在完成，下次待完成：退出时发送消息给chatServer时chatServer的处理,以及退出时自身线程是否还要关闭等等。完成这个后可以试着通信。在一台机子上登录2个用户：测试浏览器的session针对浏览器还是针对网页（因为退出时有删除session的user，因此担心同时在一个机器上登录，退出一人时会不会将所有人退出）
 3. 2019.7.7
+   - 登录没有问题。现在退出的时候报错，下周解决。
