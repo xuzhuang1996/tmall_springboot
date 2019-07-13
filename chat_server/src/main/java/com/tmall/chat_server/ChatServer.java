@@ -113,30 +113,25 @@ public class ChatServer {
         @Override
         public void run() {
 
-            while (!Thread.currentThread().isInterrupted()) {
                 try {
                     int size;
-                    //这里原先没有。我认为是：当客户端退出时，忘了关闭读取线程，因此需要单独关闭
-                    if(!client.isConnected())
+                    //返回值大于0表示还没读完，=0即读完，就退出while
+                    while (((size = client.read(buf)) > 0))
                     {
-                        Thread.currentThread().interrupt();
-                        System.out.println("读取线程正在关闭");
-                        continue;
+                        buf.flip();
+                        baos.write(buf.array(), 0, size);
+                        buf.clear();
                     }
-                    if (!((size = client.read(buf)) > 0)) break;//返回值大于0表示还没读完，=0即读完，就退出while
-                    buf.flip();
-                    baos.write(buf.array(), 0, size);
-                    buf.clear();
-                    if (size == -1) {
-                        return;
-                    }
-//                  log.info("读取完毕，继续监听");
+//                    if (size == -1) {
+//                        return;
+//                    }
                     System.out.println("读取完毕，继续监听");
                     //继续监听读取事件，key.interestOps返回代表需要Selector监控的IO操作的bit mask
-                    //Sets this key's interest set to the given value
                     key.interestOps(key.interestOps() | SelectionKey.OP_READ);
-                    //让处在阻塞状态的select()方法立刻返回 该方法使得选择器上的第一个还没有返回的选择操作立即返回。
-                    //如果当前没有进行中的选择操作，那么下一次对select()方法的一次调用将立即返回。
+                    // 让处在阻塞状态的select()方法立刻返回 该方法使得选择器上的第一个还没有返回的选择操作立即返回。
+                    // 如果当前没有进行中的选择操作，那么下一次对select()方法的一次调用将立即返回。
+                    // 某个线程调用select()方法后阻塞了，即使没有通道处于就绪状态，也有办法让其从select()方法返回。
+                    // 只要让其它线程在第一个线程调用select()方法的那个对象上调用Selector.wakeup()方法即可。阻塞在select()方法上的线程会立马返回。
                     key.selector().wakeup();
                     byte[] bytes = baos.toByteArray();
                     baos.close();
@@ -157,9 +152,11 @@ public class ChatServer {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    key.cancel();
+                    System.out.println("cancel key for Exception");
                 }
 
-            }
+
         }
     }
 

@@ -49,10 +49,10 @@ public class UserManager {
     //获取用户的通道，进行发送消息。这个通道在注册的时候就会设置。如果为空，说明用户下线。
     public synchronized SocketChannel getUserChannel(String username) {
         User user = users.get(username);
-        if(user == null){
+        SocketChannel lastLoginChannel;
+        if(user == null || (lastLoginChannel = user.getChannel()) == null){
             return null;
         }
-        SocketChannel lastLoginChannel = user.getChannel();
         if (onlineUsers.containsKey(lastLoginChannel)) {
             return lastLoginChannel;
         } else {

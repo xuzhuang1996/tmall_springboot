@@ -52,12 +52,12 @@ public class LogoutMessageHandler extends ChatMessageHandler {
         //消息做好后，准备发送
         try {
             onlineUsers.decrementAndGet();
-            super.broadcast(logoutBroadcast,server);
             clientChannel.write(ByteBuffer.wrap(response));
-            //必须要cancel，否则无法从keys从去除该客户端==================可以调试看一下发生了什么===================
+            super.broadcast(logoutBroadcast,server);
+            //必须要cancel，否则无法从keys从去除该客户端==================可以调试看一下发生了什么：java.io.IOException: 你的主机中的软件中止了一个已建立的连接。===================
             client.cancel();
-            clientChannel.close();
-            clientChannel.socket().close();
+            clientChannel.close();//用完Selector后调用其close()方法会关闭该Selector，且使注册到该Selector上的所有SelectionKey实例无效。通道本身并不会关闭。
+            clientChannel.socket().close();//与该通道相关的socket也要关闭
         } catch (IOException e) {
             e.printStackTrace();
         }
