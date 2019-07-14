@@ -122,9 +122,11 @@ public class ChatServer {
                         baos.write(buf.array(), 0, size);
                         buf.clear();
                     }
-//                    if (size == -1) {
-//                        return;
-//                    }
+                    //当客户端主动切断连接的时候，服务端 Socket 的读事件（FD_READ）仍然起作用，服务端 Socket 的状态仍然是有东西可读，当然此时读出来的字节肯定是 0。
+                    if (size == -1) {
+                        System.out.println("遇到-1的情况");
+                        return;
+                    }
                     System.out.println("读取完毕，继续监听");
                     //继续监听读取事件，key.interestOps返回代表需要Selector监控的IO操作的bit mask
                     key.interestOps(key.interestOps() | SelectionKey.OP_READ);

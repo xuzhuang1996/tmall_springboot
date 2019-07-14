@@ -56,8 +56,15 @@ public class ChatClient {
             clientChannel.configureBlocking(false);
             clientChannel.register(selector, SelectionKey.OP_READ);
             buf = ByteBuffer.allocate(DEFAULT_BUFFER_SIZE);
-            //登录时，源码的处理用socket进行判断，虽然网页的登录成功，但不一定能登录服务器的数据。这里先留着
-            login();
+            //登录时，想服务器进行发送登录请求，即注册请求
+            ChatMessage message = new ChatMessage(
+                    new ChatMessageHeader.ChatBuilder()
+                            .type_message(MessageType.LOGIN)
+                            .sender(username)
+                            .timestamp(System.currentTimeMillis())
+                            .build(),null);//密码不要
+            clientChannel.write(ByteBuffer.wrap(ProtoStuffUtil.serialize(message)));
+
             isConnected = true;
             isLogin=true;//由于服务器不进行验证，因此初始化网络后就是登录状态了
         } catch (ConnectException e) {
@@ -71,55 +78,36 @@ public class ChatClient {
     //我认为不应该为私有
     public void disConnect() {
         try {
-            logout();
+            if (!isLogin) {
+                return;
+            }
+            System.out.println("客户端发送下线请求");
+            ChatMessage message = new ChatMessage(
+                    new ChatMessageHeader.ChatBuilder()
+                            .type_message(MessageType.LOGOUT)
+                            .sender(username)
+                            .timestamp(System.currentTimeMillis())
+                            .build(), null);
+            clientChannel.write(ByteBuffer.wrap(ProtoStuffUtil.serialize(message)));
+            // Thread.sleep(1000000000);//这里可以取消注释，多线程调试一下run方法，发现客户端发送完消息后服务器关闭了连接，
+            // 但是客户端的Socket 的读事件（FD_READ）仍然起作用，也就是说调试的时候还是会进入到run方法的if(selectionKey.isReadable())中。导致读到的数据为null。
+            // 因此发送消息后就要调用shutdown，待线程自己处理完当前事务后关闭线程。
+            //如果在发送请求下线消息后，在此等待一会，接受消息线程会收到head-null,body-null的消息。
             if (!isConnected) {
                 return;
             }
-            listener.shutdown();
-            //如果发送消息后马上断开连接，那么消息可能无法送达
-            Thread.sleep(10);
+
+            //listener.shutdown();//这样客户端接收消息的线程在处理完手头的东西后就就关闭了。不过这里我在下线消息接收后调用了。
+            //如果发送消息后马上断开连接，那么消息可能无法送达，导致服务器无法关闭他那边的socket以及通道。于是推迟一下，待发送后自己线程停止，然后关闭通道。
+            Thread.sleep(1000);
             clientChannel.socket().close();
             clientChannel.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    //本来想把这个登录去掉。但是还是分开了。作为服务器的登录吧。
-    private void login() {
-        ChatMessage message = new ChatMessage(
-                new ChatMessageHeader.ChatBuilder()
-                        .type_message(MessageType.LOGIN)
-                        .sender(username)
-                        .timestamp(System.currentTimeMillis())
-                        .build(),null);//密码不要
-        try {
-            clientChannel.write(ByteBuffer.wrap(ProtoStuffUtil.serialize(message)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    //下线的时候发送到服务器的管理员。管理员进行下线
-    private void logout() {
-        if (!isLogin) {
-            return;
-        }
-        System.out.println("客户端发送下线请求");
-		ChatMessage message = new ChatMessage(
-				new ChatMessageHeader.ChatBuilder()
-						.type_message(MessageType.LOGOUT)
-						.sender(username)
-						.timestamp(System.currentTimeMillis())
-						.build(), null);
-		try {
-			clientChannel.write(ByteBuffer.wrap(ProtoStuffUtil.serialize(message)));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-    }
 
     //发送信息
     public void send(String content) {
@@ -207,6 +195,8 @@ public class ChatClient {
                             System.out.println("登录成功");
                         } else if (code == ChatResponseCode.LOGOUT_SUCCESS) {
                             System.out.println("下线成功");
+                            //我觉得这里应该加入线程关闭的操作，而不是在发送退出消息时调用shutdown。
+                            listener.shutdown();
                             break;
                         }
                     }
