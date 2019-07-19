@@ -37,9 +37,9 @@
 4. 开始通信
    - 首先启动ChatServer、tmall。
    - 客户端：用户AB上线，即在网页主页登录，输入用户信息，登录时执行了initNetWork，连接ChatServer服务器后就发送上线消息给ChatServer服务器，然后服务器解析消息后，用LoginMessageHandler将用户注册到UserManager。注册成功后服务器返回登录成功的消息，以及广播上线消息，这里服务器的消息统一用PromptMsgProperty来表示消息体。客户端登录成功后将注册到tmall的manager下，便于发送消息使用`ClientManage.map.put(userFact.getName(),chatClient);`
-   - 服务器：ListenerThread一直监听请求，handleAcceptRequest()函数处理客户端连接，当客户端连接到服务器后服务器将监听read事件。然后服务器收到用户上线请求消息，转到ReadEventHandler开始读取消息内容，SelectionKey是传入的用户的通道对象，服务器的manager将该通道SelectionKey.channel注册到onlineUsers，用于后面发目标用户消息，直接从里面取通道进行传递。处理完用户的消息后，开始respose,首先是返回用户登录成功，然后用户数onlineUsers++，同时广播哪位用户上线,这里用到了String.format。到此登录结束。
+   - 服务器：ListenerThread一直监听请求，handleAcceptRequest()函数处理客户端连接，当客户端open后获取socket，连接到服务器后服务器将可以监听该客户端通道的read事件。然后服务器收到用户上线请求消息，转到ReadEventHandler开始读取消息内容，SelectionKey是传入的用户的通道对象，服务器的manager将该通道SelectionKey.channel注册到onlineUsers，用于后面发目标用户消息，直接从里面取通道进行传递。处理完用户的消息后，开始respose,首先是返回用户登录成功，然后用户数onlineUsers++，同时广播哪位用户上线,这里用到了String.format。到此登录结束。
       > 比如枚举中`LOGIN_BROADCAST = "%s用户已上线";`,这里`String.format(LOGIN_BROADCAST,name)`。`%s`就是字符串占位符。
-   - 用户A向用户B发送消息，消息先发送到服务器（流的方式），服务器解析消息（先将流转字节数组，再重新生成消息对象），获取接受对象，服务器向接受对象发送消息（服务器获取用户与接收方的通道channel，然后向目标通道write）。这里就需要服务器来管理用户UserManager，然后向在线用户发消息。
+   - 用户A向用户B发送消息，消息先发送到服务器（流的方式），服务器解析消息（先将流转字节数组，再重新生成消息对象），获取接受对象，服务器向接受对象发送消息（服务器通过onlineUsers获取目标用户的通道channel，然后向目标通道write，这个通道在用户下线的时候被设置为null，如果该用户通道不为空，则在线，否则不在线）。这里就需要服务器来管理用户UserManager，然后向在线用户发消息。
    - 下线时，需要注意：
      - 客户端退出时，分2个关闭。1是处理线程的关闭，2是客户端关闭与服务器的连接。这里需要注意多线程调试：一般新开的线程，后面加断点时是不会进去的，只在主线程的断点有效，需要选择正确的线程调试方法。
      - 再就是注意粘包问题：服务器在处理的时候发送了2个消息给客户端，源码没有sleep处理，因此只收到了广播的消息。
@@ -47,10 +47,10 @@
    
 5. 难点：tmall与聊天项目的结合。
    - chatServer需要所有用户信息，但是两个不同工程数据不能共享，于是通过httpclient获取tmall项目的用户数据，获取时为字符串，因此需要转换——JsonUtils工具包。`List<User> list = JsonUtils.jsonToList(json,User.class);`这样就获取所有用户信息。
-   - 服务器自己有一个manager，但是两个工程不同，如何从服务器manager拿到对象呢？干脆直接新建一个。
+   - 待定：服务器自己有一个manager，但是两个工程不同，如何从服务器manager拿到对象呢？干脆直接新建一个。
    - 粘包问题：之前退出时，服务器一致性发出退出成功+广播退休消息，由于中间没有sleep，导致客户端只收到了广播消息。
-6. 亮点：
    - 服务器需要处理几种不同类型的客户端消息：于是在消息中加入消息头。里面设置消息的类型。于是采用反射的方式，先根据消息类型，拿到对应处理类的类名，调用对应方法。如果没有spring 就反射，有就直接根据类名拿对象。
+   - 多线程调试。
    
    
 5. 异常
