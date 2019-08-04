@@ -1,6 +1,7 @@
 ## 进度
 1. 2019/8/4：@Builder注解完成：私有构造函数增强完成。接下来注入Builder静态类
 
+
 ## 实现步骤：
 1. 新建Lombok工程，新建myBuilder注解，
 
@@ -79,3 +80,9 @@
             </dependency>
             
 3. 在完成这些后，可以直接使用注解所带来的增加，如增加了一个方法，可以直接调用，但是idea没有插件能识别，需要自己写插件来完成。但是这不影响我们直接调用，也就是说，完成上面的工作后就可以直接运行。
+
+4. 参考
+[jctree语法](https://blog.csdn.net/u013998373/article/details/90050810#JCExpression_338)
+[配置](https://juejin.im/entry/5a390ba76fb9a0451e3fed7c)
+[set方法参数问题](https://nicky-chen.github.io/2019/05/03/apt_lombok_implement/)
+[构造函数增强](https://houbb.github.io/2017/10/13/jctree)
