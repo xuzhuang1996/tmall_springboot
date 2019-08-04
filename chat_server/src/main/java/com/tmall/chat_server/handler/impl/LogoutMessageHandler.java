@@ -57,7 +57,6 @@ public class LogoutMessageHandler extends ChatMessageHandler {
             client.cancel();
             clientChannel.close();//用完Selector后调用其close()方法会关闭该Selector，且使注册到该Selector上的所有SelectionKey实例无效。通道本身并不会关闭。
             clientChannel.socket().close();//与该通道相关的socket也要关闭
-
         } catch (IOException e) {
             e.printStackTrace();
         }

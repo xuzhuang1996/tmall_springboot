@@ -17,10 +17,10 @@ public abstract class AutoReloadCache<K, V> {
     private boolean initialed=false;//判断是否为初次加载。
     private ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor(new CacheThreadFactory("AutoReloadCacheThread"));
     //==============================================成员方法===============================================
-    protected abstract void reload();//具体加载逻辑，即加载什么类型的数据。由具体子类完成
+    protected abstract Map<K,V> reload();//具体加载逻辑，即加载什么类型的数据。由具体子类完成
     //默认间隔多少次从数据库取数据.子类可以根据具体加载对象，重写该方法来设置间隔加载时间。
     protected long getDelay(){
-        return TimeUnit.MINUTES.toSeconds(1000000);
+        return TimeUnit.MINUTES.toSeconds(10);
     }
     //获取缓存
     public V get(K key){
@@ -42,7 +42,7 @@ public abstract class AutoReloadCache<K, V> {
                             //LoggerFactory.getLogger(Thread.currentThread().getName()).info("更新缓存"); // 不用新建日志对象。直接输出。还能顺便输出到控制台
                             //这里的try是必须的，否则捕获不到异常
                             try {
-                                reload();//如果异常被捕获，则继续运行，但是如果没有捕获，将停止。
+                                cache = reload();//如果异常被捕获，则继续运行，但是如果没有捕获，将停止。
                             }catch (Exception e){
                                 logger.error(e.getMessage(),e);
                             }
