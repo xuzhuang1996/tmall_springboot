@@ -1,15 +1,10 @@
 package com.xu.lombok;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import com.xu.lombok.anno.AllArgsConstructor;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+@AllArgsConstructor
 public class LombokApplicationTests {
 
-    @Test
     public void contextLoads() {
     }
 

@@ -1,13 +1,14 @@
 
 package com.tmall.config;
 
+import com.tmall.anno.annoHandler.AuthFilter;
 import com.tmall.interceptor.LoginInterceptor;
 import com.tmall.interceptor.OtherInterceptor;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
 //必须在这里进行配置
@@ -29,6 +30,8 @@ class WebMvcConfigurerTmp implements WebMvcConfigurer {
 				.addPathPatterns("/**");
 		registry.addInterceptor(getLoginIntercepter())
 				.addPathPatterns("/**");
+		registry.addInterceptor(getAuthFilter())
+				.addPathPatterns("/**");
 	}
 
 	//这里只是将ajax的拿到了。
@@ -39,6 +42,11 @@ class WebMvcConfigurerTmp implements WebMvcConfigurer {
 				.allowedOrigins("*")
 				.allowedMethods("*")
 				.allowedHeaders("*");
+	}
+
+	@Bean
+	public AuthFilter getAuthFilter() {
+		return new AuthFilter();
 	}
 
 	//增加静态资源的映射，因为实现这个接口的原因，原先在配置文件写的静态资源无效

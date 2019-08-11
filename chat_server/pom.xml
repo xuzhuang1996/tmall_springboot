@@ -36,18 +36,6 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.tmall</groupId>
-            <artifactId>common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.xu</groupId>
-            <artifactId>tmall_springboot</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>com.xu</groupId>
             <artifactId>tmall_springboot</artifactId>
             <version>0.0.1-SNAPSHOT</version>

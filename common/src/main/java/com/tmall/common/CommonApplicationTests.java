@@ -1,20 +1,24 @@
 package com.tmall.common;
 
-import com.xu.lombok.anno.myBuilder;
+import com.xu.lombok.anno.AllArgsConstructor;
 
-@myBuilder
+@AllArgsConstructor
+//@NoArgsConstructor
+//@myBuilder
+//@Log
 public class CommonApplicationTests {
 
-    public int xu;
+    private int xu;
     public String xuxux;
 
-    public void contextLoads() {
+    public static void main(String[] args) {
+//        CommonApplicationTests xu = new CommonApplicationTests(1, "abcxc");
+//        System.out.println(xu.xuxux);
     }
 
-    public static void main(String[] args) {
-        CommonApplicationTests xu = new CommonApplicationTests(1, "abcxc");
-        System.out.println(xu.xuxux);
-//        System.out.println("5");
-    }
+//    public CommonApplicationTests(int x,String a){
+//        xu = x;
+//        xuxux = a;
+//    }
 
 }
