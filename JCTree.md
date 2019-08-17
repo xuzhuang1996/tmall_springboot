@@ -61,17 +61,21 @@
                         </plugin>
                     </plugins>
                 </build>
-    2. Lombok工程的pom.xml还需要添加依赖。然后maven打包进本地私服：左上角的maven-Lifecycle-具体工程-clean-install
-  
+    2. Lombok工程的resources/META-INF.services中新建文件，添加处理类的完整包名。这样的目的：Lombok工程在启动的时候根据文件中配置的 Jar 包去扫描项目所依赖的 Jar 包
+    
+                com.xu.lombok.processor.BeanBuilderProcessor
+                com.xu.lombok.processor.AllArgsConstructorProcessor
+                com.xu.lombok.processor.BeanLogProcessor
+    2. Lombok工程的pom.xml还需要添加依赖。
             <dependency>
                 <groupId>com.sun</groupId>
                 <artifactId>tools</artifactId>
                 <version>1.8</version>
                 <scope>system</scope>
-                <systemPath>${java.home}\..\lib\tools.jar</systemPath>
+                <systemPath>${java.home}\..\lib\tools.jar</systemPath><!--这个就是找到jdk/lib包下的tools.jar，需要这个依赖-->
             </dependency>
             
-            
+    4. 然后maven打包进本地私服：左上角的maven-Lifecycle-具体工程-clean-install
     3. 而使用该注解的工程，只需要在自己工程的pom.xml添加对上面工程的依赖就可以了：
     
             <dependency>
@@ -79,7 +83,7 @@
                 <artifactId>lombok</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
             </dependency>
-            
+     5. 如果想在其中打印信息，我发现message没有打印出来。不过编译期间sout倒是打出来了。
 3. 在完成这些后，可以直接使用注解所带来的增加，如增加了一个方法，可以直接调用，但是idea没有插件能识别，需要自己写插件来完成。但是这不影响我们直接调用，也就是说，完成上面的工作后就可以直接运行。
 
 4. 参考
