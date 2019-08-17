@@ -1,1 +1,4 @@
 com.xu.lombok.processor.BeanBuilderProcessor
+com.xu.lombok.processor.AllArgsConstructorProcessor
+com.xu.lombok.processor.BeanLogProcessor
+com.xu.lombok.processor.BeanNoArgsConstructorProcessor

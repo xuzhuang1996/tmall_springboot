@@ -6,22 +6,30 @@ import com.sun.tools.javac.tree.JCTree;
 import com.sun.tools.javac.tree.TreeTranslator;
 import com.sun.tools.javac.util.List;
 import com.sun.tools.javac.util.ListBuffer;
+import com.sun.tools.javac.util.Name;
 import com.xu.lombok.anno.Log;
+import com.xu.lombok.utils.ProcessUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 import java.util.Set;
 
 
-//https://blog.csdn.net/enweitech/article/details/51915532
+//import:https://blog.csdn.net/nideshouhu/article/details/90757952
 @SupportedAnnotationTypes({"com.xu.lombok.anno.Log"})//指定需要处理的注解
 @SupportedSourceVersion(SourceVersion.RELEASE_8)//指定jdk版本
 public class BeanLogProcessor  extends BaseProcessor{
+
+    /**
+     * 字段的语法树节点的集合
+     */
+    private List<JCTree.JCVariableDecl> fieldJCVariables;
 
     //执行完该函数后，
     @Override
@@ -31,65 +39,99 @@ public class BeanLogProcessor  extends BaseProcessor{
         String name = Log.class.getName();//将要新增的变量的名称。这里对Log注解增强，因此名字就是Log
         //遍历这个set里的每一个元素
         set.forEach(element -> {
-            // 只处理作用在类上的注解.对每一个类，都添加对象
-            if (element.getKind() == ElementKind.CLASS) {
-                addLogObject(element, name);
-            }
-        });
-        return true;
-    }
-
-    /**
-     * 定义方法（啥函数都行）：处理变量的方法,
-     */
-
-    private void addLogObject(Element element, String name){
-        JCTree jcTree = trees.getTree(element);
-        //创建一个TreeTranslator，并重写其中的visitClassDef方法，这个方法处理遍历语法树得到的类定义部分jcClassDecl
-        jcTree.accept(new TreeTranslator() {
-            @Override
-            public void visitClassDef(JCTree.JCClassDecl jcClassDecl) {
-                //修饰语，目前不知干啥用的
-                jcClassDecl.mods = (JCTree.JCModifiers) this.translate((JCTree) jcClassDecl.mods);
-                //正式的类参数
-                jcClassDecl.typarams = this.translateTypeParams(jcClassDecl.typarams);
-                //这个类扩展的类
-                jcClassDecl.extending = (JCTree.JCExpression) this.translate((JCTree) jcClassDecl.extending);
-                //这个类实现的接口
-                jcClassDecl.implementing = this.translate(jcClassDecl.implementing);
-
-
-                ListBuffer<JCTree> statements = new ListBuffer<>();//存放类的所有东西
-                List<JCTree> oldList = this.translate(jcClassDecl.defs);//jcClassDecl.defs存着所有成员变量与构造函数
-                List<JCTree.JCVariableDecl> jcVariableDeclList = List.nil();//存放所有成员变量
-                List<JCTree.JCTypeParameter> jcTypeParameterList = List.nil();//存参数类型
-
-                //对成员变量进行遍历，如果有名为Log的对象了，则抛出异常
-                for (JCTree jcTree : oldList) {
-                    if (jcTree.getKind().equals(Tree.Kind.VARIABLE)) {
-                        JCTree.JCVariableDecl jcVariableDecl = (JCTree.JCVariableDecl) jcTree;
-                        if(jcVariableDecl.name.toString().equals(name)){
-                            try {
-                                throw new Exception();
-                            } catch (Exception e) {
-                                e.printStackTrace();
+            //获取当前元素的JCTree对象
+            JCTree jcTree = trees.getTree(element);
+            //JCTree利用的是访问者模式，将数据与数据的处理进行解耦，TreeTranslator就是访问者，这里我们重写访问类时的逻辑
+            jcTree.accept(new TreeTranslator() {
+                @Override
+                public void visitClassDef(JCTree.JCClassDecl jcClass) {
+                    //更新变量集合
+                    before(jcClass);
+                    //对成员变量进行遍历，如果有名为Log的对象了，则抛出异常
+                    for (JCTree.JCVariableDecl jcVariable : fieldJCVariables)  {
+                        if (jcVariable.getKind().equals(Tree.Kind.VARIABLE)) {
+                            if(jcVariable.name.toString().equals(name)){
+                                try {
+                                    throw new Exception("已存在Log变量,@Log注解无法提供Log变量");
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
                     }
-                    statements.append(jcTree);//将原来的东西添加进来
+                    importPackage(element, Logger.class);
+                    importPackage(element, LoggerFactory.class);
+                    //添加Log
+                    jcClass.defs = jcClass.defs.append(addLogObject(element.getSimpleName().toString()));
+                    //然后再清除fieldJCVariables
+                    after();
+                    System.out.println("最终生成：===========/n"+jcClass);
                 }
-                //准备写变量吧，private Logger logger = LoggerFactory.getLogger(GloabalExceptionHandler.class);
-                //Modifiers类、变量、方法等的(修饰符,注解),即第一个参数是修饰符，第二个是该变量上的注解
-                //(JCTree.JCIdent)Logger
-
-                JCTree.JCExpression varType = treeMaker.Ident(names.fromString(name));
-                JCTree.JCVariableDecl variableDecl = treeMaker
-                        .VarDef(treeMaker.Modifiers(Flags.PRIVATE | Flags.STATIC, List.nil()), names.fromString(name), varType, null);
-                statements.append(variableDecl);
-                jcClassDecl.defs = statements.toList(); //更新
-                this.result = jcClassDecl;
-            }
+            });
         });
+        return true;
+    }
+    /**
+     * 导入一个包
+     *
+     * @param element     所在的类
+     * @param importClass 要导入的包
+     */
+    private void importPackage(Element element, Class<?> importClass) {
+        JCTree.JCCompilationUnit compilationUnit = (JCTree.JCCompilationUnit) trees.getPath(element).getCompilationUnit();
+        JCTree.JCFieldAccess fieldAccess = treeMaker.Select(treeMaker.Ident(names.fromString(importClass.getPackage().getName())), names.fromString(importClass.getSimpleName()));
+        JCTree.JCImport jcImport = treeMaker.Import(fieldAccess, false);
+        ListBuffer<JCTree> imports = new ListBuffer<>();
+        imports.append(jcImport);
+        for (int i = 0; i < compilationUnit.defs.size(); i++  ) {
+            imports.append(compilationUnit.defs.get(i));
+        }
+        compilationUnit.defs = imports.toList();
+    }
+
+
+
+    /**
+     * 定义方法（啥函数都行）：处理变量的方法,
+     * 准备写变量吧，private Logger Log = LoggerFactory.getLogger(GloabalExceptionHandler.class);
+     */
+    private JCTree.JCVariableDecl addLogObject(String targetClassName){
+        //标识符，即Logger类型的变量。getCanonicalName：org.slf4j.Logger
+        JCTree.JCIdent varType = treeMaker.Ident(names.fromString(Logger.class.getSimpleName()));
+        //变量名
+        Name name = names.fromString(Log.class.getSimpleName());
+        //初始化
+        JCTree.JCExpression initValue = treeMaker.Apply(
+                        List.nil(),
+                        treeMaker.Select(
+                                treeMaker.Ident(names.fromString(LoggerFactory.class.getSimpleName())),
+                                names.fromString("getLogger")
+                        ),
+                        List.of(treeMaker.Ident(names.fromString(targetClassName+".class"))) //传入的参数集合
+        );
+        return treeMaker.VarDef(
+                        treeMaker.Modifiers(Flags.PRIVATE + Flags.STATIC + Flags.FINAL),
+                        name,
+                        varType,
+                        initValue
+        );
+    }
+
+    /**
+     * 进行一些初始化工作
+     *
+     * @param jcClass 类的语法树节点.对于一个加了注解的类Element，获取其字段的语法树节点的集合
+     */
+    private void before(JCTree.JCClassDecl jcClass) {
+        this.fieldJCVariables = ProcessUtil.getJCVariables(jcClass);
+    }
+
+    /**
+     * 进行一些清理工作
+     */
+    private void after() {
+        this.fieldJCVariables = null;
     }
 
 }
+

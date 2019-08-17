@@ -89,6 +89,7 @@ public class AllArgsConstructorProcessor extends BaseProcessor {
                 , jcStatements.toList() //所有的语句
         );
 
+        System.out.println("xu"+jcVariableDeclList.toArray().toString());
         return treeMaker.MethodDef(
                 treeMaker.Modifiers(Flags.PUBLIC), //访问标志
                 names.fromString(ProcessUtil.CONSTRUCTOR_NAME), //名字
