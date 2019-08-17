@@ -89,7 +89,7 @@
 4. 参考
    1. [jctree语法](https://static.javadoc.io/org.kohsuke.sorcerer/sorcerer-javac/0.11/com/sun/tools/javac/tree/JCTree.html)
    1. [动态引入包](http://blog.kangyonggan.com/2018/08/06/%E7%BC%96%E8%AF%91%E6%97%B6%E6%B3%A8%E8%A7%A3%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A%EF%BC%88%E5%9B%9B%EF%BC%89/)
-   1. [JSR语法博客](https://blog.csdn.net/a_zhenzhen/article/details/86065063)
+   1. [JSR语法博客](https://www.jianshu.com/p/68027eaf45ad)
    1. [AST类创建语法](https://blog.csdn.net/lovelion/article/details/20309379) 
    2. [配置](https://juejin.im/entry/5a390ba76fb9a0451e3fed7c)
    3. [set方法参数问题](https://nicky-chen.github.io/2019/05/03/apt_lombok_implement/)
