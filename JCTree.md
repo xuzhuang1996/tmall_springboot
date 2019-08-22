@@ -67,6 +67,7 @@
                 com.xu.lombok.processor.AllArgsConstructorProcessor
                 com.xu.lombok.processor.BeanLogProcessor
     2. Lombok工程的pom.xml还需要添加依赖。
+    
             <dependency>
                 <groupId>com.sun</groupId>
                 <artifactId>tools</artifactId>
