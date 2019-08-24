@@ -1,4 +1,9 @@
 [来源](https://github.com/songxinjianqwe/Chat)
+
+## 流程图
+
+<img src="https://github.com/xuzhuang1996/tmall_springboot/blob/master/img/chat.png" width=100% height=100% />
+
 ## 设计功能
 1. 当前登陆的用户可以查看当前所有登陆的用户列表。然后选择其中用户发送消息。接收者不存在或已下线时将无法发送，并提示：接收者不存在或已下线
 2. 用户收到其他人发送的消息时会提醒。因此这里有一个监听。
