@@ -99,3 +99,6 @@
         git rm -r --cached .
         git add .
         git commit -m 'update .gitignore'
+13. 整体流程
+
+<img src="https://github.com/xuzhuang1996/tmall_springboot/blob/master/img/tmall.png" width=100% height=100% />
