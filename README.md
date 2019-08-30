@@ -49,6 +49,7 @@
    - product表是没有PropertyValue信息的，同时product类也没有PropertyValue字段。因此在创建product时PropertyValue也要跟着创建，同时进行绑定。
 
 2. DAO：继承JPA仓库。如果有特殊需求，需要根据其他实体对象查询该对象，增加方法findByClassName。
+   1. [JPA用法](https://www.ibm.com/developerworks/cn/opensource/os-cn-spring-jpa/)
 
 3. 在页面跳转控制器中，如果写好跳转的HTML，页面出不来，就可以去页面查需要哪些数据了。
 
@@ -98,3 +99,6 @@
         git rm -r --cached .
         git add .
         git commit -m 'update .gitignore'
+13. 整体流程
+
+<img src="https://github.com/xuzhuang1996/tmall_springboot/blob/master/img/tmall.png" width=100% height=100% />

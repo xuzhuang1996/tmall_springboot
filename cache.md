@@ -26,7 +26,8 @@
 1. 首先是缓存代码中缓存的值一直没有更新，就怀疑线程是不是挂了，本想使用jconsole控制台来查看线程运行情况，由于项目部署在远程服务器，始终连不上（中间好像是有一层代理，还是端口没有开放的原因），于是不清楚线程是否挂的情况下，查看日志，并没有发现报错。在Java中，线程中的异常是不能抛出到调用该线程的外部方法中捕获的。而这里缓存的线程通过线程工厂创建的，里面重写了UncaughtExceptionHanlder方法。理论上，如果报错应该是能捕获到的。
 1. 一般线程的异常，可以通过重写setUncaughtExceptionHandler方法来捕获。
 2. [线程池](https://www.jianshu.com/p/281958d20b04)（特指ThreadPoolExecutor）中线程执行时，有2种方法execute(Runnable) 和submit(Callable/Runnable)。使用 execute 方法执行任务所抛出的异常可以捕获UncaughtExceptionHandler。
-   - submit提交任务线程时，在任务线程中重写setUncaughtExceptionHandler方法后，该方法不会捕获异常。原因如下源码，可以知道，如果想知道 submit 的执行结果是成功还是失败，必须调用 Future.get() 方法。
+   1. submit提交任务线程时，在任务线程中重写setUncaughtExceptionHandler方法后，该方法不会捕获异常。原因如下源码，可以知道，如果想知道 submit 的执行结果是成功还是失败，必须调用 Future.get() 方法。
+   2. submit的实现在[AbstractExecutorService中](https://github.com/xuzhuang1996/MyJava/blob/master/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B.md#threadpoolexecutor)，而ThreadPoolExecutor继承了这种默认实现。
    
          //submit 方法是调用 execute 实现任务执行的。但是在调用 execute 之前，任务会被封装进 FutureTask 类中，
          //然后最终工作线程执行的是 FutureTask 中的 run 方法。
