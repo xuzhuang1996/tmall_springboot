@@ -64,7 +64,7 @@ public class LogoutMessageHandlerAbstract extends AbstractChatMessageHandler {
     }
 
     @Override
-    protected boolean supports(MessageType messageType){
+    public boolean supports(MessageType messageType){
         return messageType == MessageType.LOGOUT;
     }
 }

@@ -87,7 +87,7 @@ public class LoginMessageHandlerAbstract extends AbstractChatMessageHandler {
     }//end of function
 
     @Override
-    protected boolean supports(MessageType messageType){
+    public boolean supports(MessageType messageType){
         return messageType == MessageType.LOGIN;
     }
 }

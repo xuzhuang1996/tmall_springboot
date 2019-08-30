@@ -2,7 +2,6 @@ package com.tmall.chat_server.handler;
 
 import com.tmall.common.chat_enumeration.MessageType;
 import com.tmall.common.dto.ChatMessage;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -12,7 +11,7 @@ import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Component
+
 public abstract class AbstractChatMessageHandler {
     //广播的时候作为消息发送方。
     protected static final String SYSTEM_SENDER = "系统提示";
@@ -31,7 +30,10 @@ public abstract class AbstractChatMessageHandler {
         }
     }
 
-    protected boolean supports(MessageType messageType){
-        return messageType == MessageType.BROADCAST;
-    }
+    /**
+     * 判断消息处理类是否支持该类型消息的处理
+     * @param messageType 消息类型
+     * @return
+     */
+    abstract public boolean supports(MessageType messageType);
 }
