@@ -1,8 +1,8 @@
 package com.tmall.chat_server;
 
 import com.tmall.chat_server.exception.InterruptedExceptionHandler;
-import com.tmall.chat_server.handler.ChatMessageHandler;
-import com.tmall.chat_server.utils.SpringContextUtil;
+import com.tmall.chat_server.handler.AbstractChatMessageHandler;
+import com.tmall.chat_server.handler.MessageHandlerAdapter;
 import com.tmall.common.dto.ChatMessage;
 import com.tmall.common.utils.ProtoStuffUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +36,10 @@ public class ChatServer {
     private ExecutorService readPool;
     private AtomicInteger onlineUsersNumber;
     private ListenerThread listenerThread;
+
+    //根据消息类型，获取对应的处理类
+    @Autowired
+    MessageHandlerAdapter messageHandlerAdapter;
 
     @Autowired
     private InterruptedExceptionHandler interruptedExceptionHandler;
@@ -141,14 +145,15 @@ public class ChatServer {
                     // 客户端的数据有可能是下线通知、有可能是发送其他人的消息，需要匹配到具体某个处理类.如果if-else太low。
                     ChatMessage message = ProtoStuffUtil.deserialize(bytes, ChatMessage.class);
                     //于是采用反射的方式，先根据消息类型，拿到对应处理类的类名。这里可以直接用spring的getBean获取,或者反射
-                    String beanName = message.getHeader().getType_message().toString();
-                    ChatMessageHandler handler = (ChatMessageHandler)SpringContextUtil.getBean(beanName);//这个工具类没有用tmall的，而是在当前项目中新建的一个。因为一个项目一个spring容器
+//                    String beanName = message.getHeader().getType_message().toString();
+//                    ChatMessageHandler handler = (ChatMessageHandler)SpringContextUtil.getBean(beanName);//这个工具类没有用tmall的，而是在当前项目中新建的一个。因为一个项目一个spring容器
                     try {
+                        AbstractChatMessageHandler handler = messageHandlerAdapter.getHandler(message.getHeader().getType_message());
                         if(handler==null){
-                            System.out.println("获取bean失败，即获取消息处理对象失败");
+                            throw new Exception("获取bean失败，即获取消息处理对象失败");
                         }
                         handler.handle(message, selector, key, onlineUsersNumber);
-                    } catch (InterruptedException e) {
+                    } catch (Exception e) {
                         interruptedExceptionHandler.handle(client, message);
                         e.printStackTrace();
                     }

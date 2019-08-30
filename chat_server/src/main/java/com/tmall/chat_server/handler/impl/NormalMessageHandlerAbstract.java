@@ -1,8 +1,9 @@
 package com.tmall.chat_server.handler.impl;
 
-import com.tmall.chat_server.handler.ChatMessageHandler;
+import com.tmall.chat_server.handler.AbstractChatMessageHandler;
 import com.tmall.chat_server.serverMessage.PromptMsgProperty;
 import com.tmall.chat_server.userManage.UserManager;
+import com.tmall.common.chat_enumeration.MessageType;
 import com.tmall.common.chat_enumeration.ResponseType;
 import com.tmall.common.dto.ChatMessage;
 import com.tmall.common.dto.ChatMessageHeader;
@@ -20,8 +21,8 @@ import java.nio.channels.SocketChannel;
 import java.util.concurrent.atomic.AtomicInteger;
 
 //这个名字在chatServer中使用SpringContextUtil.getBean(beanName);来获取bean
-@Component("NORMAL")
-public class NormalMessageHandler extends ChatMessageHandler {
+@Component
+public class NormalMessageHandlerAbstract extends AbstractChatMessageHandler {
 
     @Autowired
     private UserManager userManager;
@@ -64,5 +65,10 @@ public class NormalMessageHandler extends ChatMessageHandler {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    protected boolean supports(MessageType messageType){
+        return messageType == MessageType.NORMAL;
     }
 }

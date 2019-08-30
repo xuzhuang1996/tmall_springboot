@@ -1,5 +1,6 @@
 package com.tmall.chat_server.handler;
 
+import com.tmall.common.chat_enumeration.MessageType;
 import com.tmall.common.dto.ChatMessage;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +13,9 @@ import java.nio.channels.SocketChannel;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
-public abstract class ChatMessageHandler {
-    public static final String SYSTEM_SENDER = "系统提示";//广播的时候作为消息发送方。
+public abstract class AbstractChatMessageHandler {
+    //广播的时候作为消息发送方。
+    protected static final String SYSTEM_SENDER = "系统提示";
 
     abstract public void handle(ChatMessage message, Selector server, SelectionKey client, AtomicInteger onlineUsers) throws InterruptedException;
 
@@ -27,5 +29,9 @@ public abstract class ChatMessageHandler {
                 }
             }
         }
+    }
+
+    protected boolean supports(MessageType messageType){
+        return messageType == MessageType.BROADCAST;
     }
 }

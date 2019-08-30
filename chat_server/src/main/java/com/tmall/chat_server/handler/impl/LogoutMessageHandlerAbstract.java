@@ -1,9 +1,10 @@
 package com.tmall.chat_server.handler.impl;
 
-import com.tmall.chat_server.handler.ChatMessageHandler;
+import com.tmall.chat_server.handler.AbstractChatMessageHandler;
 import com.tmall.chat_server.serverMessage.PromptMsgProperty;
 import com.tmall.chat_server.userManage.UserManager;
 import com.tmall.common.chat_enumeration.ChatResponseCode;
+import com.tmall.common.chat_enumeration.MessageType;
 import com.tmall.common.chat_enumeration.ResponseType;
 import com.tmall.common.dto.ChatMessage;
 import com.tmall.common.dto.ChatResponse;
@@ -19,8 +20,8 @@ import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Component("LOGOUT")
-public class LogoutMessageHandler extends ChatMessageHandler {
+@Component
+public class LogoutMessageHandlerAbstract extends AbstractChatMessageHandler {
 
     @Autowired
     private UserManager userManager;
@@ -60,6 +61,10 @@ public class LogoutMessageHandler extends ChatMessageHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    @Override
+    protected boolean supports(MessageType messageType){
+        return messageType == MessageType.LOGOUT;
     }
 }
