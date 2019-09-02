@@ -29,32 +29,32 @@
    1. submit提交任务线程时，在任务线程中重写setUncaughtExceptionHandler方法后，该方法不会捕获异常。原因如下源码，可以知道，如果想知道 submit 的执行结果是成功还是失败，必须调用 Future.get() 方法。
    2. submit的实现在[AbstractExecutorService中](https://github.com/xuzhuang1996/MyJava/blob/master/%E5%A4%9A%E7%BA%BF%E7%A8%8B/%E5%A4%9A%E7%BA%BF%E7%A8%8B.md#threadpoolexecutor)，而ThreadPoolExecutor继承了这种默认实现。
    
-         //submit 方法是调用 execute 实现任务执行的。但是在调用 execute 之前，任务会被封装进 FutureTask 类中，
-         //然后最终工作线程执行的是 FutureTask 中的 run 方法。
-         public Future<?> submit(Runnable task) {
-             if (task == null) throw new NullPointerException();
-             RunnableFuture<Void> ftask = newTaskFor(task, null);
-             execute(ftask);
-             return ftask;
-         }
-         
-         //而调用 submit 方法后也就是进入FutureTask.run。如果任务抛出异常，会被 setException 方法赋给代表执行结果的 outcome 变量，
-         //而不会继续抛出。因此，UncaughtExceptionHandler 也没有机会处理。
-         //FutureTask.run
-         try {
-             result = c.call();
-             ran = true;
-         } catch (Throwable ex) {
-             result = null;
-             ran = false;
-             setException(ex);
-         }
+            //submit 方法是调用 execute 实现任务执行的。但是在调用 execute 之前，任务会被封装进 FutureTask 类中，
+            //然后最终工作线程执行的是 FutureTask 中的 run 方法。
+            public Future<?> submit(Runnable task) {
+                if (task == null) throw new NullPointerException();
+                RunnableFuture<Void> ftask = newTaskFor(task, null);
+                execute(ftask);
+                return ftask;
+            }
 
-         protected void setException(Throwable t) {
-             if (UNSAFE.compareAndSwapInt(this, stateOffset, NEW, COMPLETING)) {
-                 outcome = t;
-                 UNSAFE.putOrderedInt(this, stateOffset, EXCEPTIONAL); // final state
-                 finishCompletion();
-             }
-         }
+            //而调用 submit 方法后也就是进入FutureTask.run。如果任务抛出异常，会被 setException 方法赋给代表执行结果的 outcome 变量，
+            //而不会继续抛出。因此，UncaughtExceptionHandler 也没有机会处理。
+            //FutureTask.run
+            try {
+                result = c.call();
+                ran = true;
+            } catch (Throwable ex) {
+                result = null;
+                ran = false;
+                setException(ex);
+            }
+
+            protected void setException(Throwable t) {
+                if (UNSAFE.compareAndSwapInt(this, stateOffset, NEW, COMPLETING)) {
+                    outcome = t;
+                    UNSAFE.putOrderedInt(this, stateOffset, EXCEPTIONAL); // final state
+                    finishCompletion();
+                }
+            }
 3. ScheduledThreadPoolExecutor是我在做缓存时使用到的线程池。对于 ScheduledThreadPoolExecutor.scheduleWithFixedDelay 和 scheduleAtFixedRate 这两个方法（循环执行，获取结果只能停止循环），其返回的 Future 只会用来取消任务，而不是得到结果。对于这两个方法来说，在 Runnable.run 方法中加 try...catch 是必须的，否则很有可能出错了却毫不知情。 
