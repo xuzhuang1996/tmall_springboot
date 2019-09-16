@@ -58,3 +58,8 @@
                 }
             }
 3. ScheduledThreadPoolExecutor是我在做缓存时使用到的线程池。对于 ScheduledThreadPoolExecutor.scheduleWithFixedDelay 和 scheduleAtFixedRate 这两个方法（循环执行，获取结果只能停止循环），其返回的 Future 只会用来取消任务，而不是得到结果。对于这两个方法来说，在 Runnable.run 方法中加 try...catch 是必须的，否则很有可能出错了却毫不知情。 
+4. 用hashmap实现缓存的缺点：
+   1. redis 数据可持久化保存，有些缓存你想重启程序后还能继续使用，map实现不了
+   2. redis 可以实现分布式部署，map实现不了
+   3. hashmap不是线程安全的，可以concurrentHashmap
+   4. Redis 缓存有过期机制，Map 本身无此功能
