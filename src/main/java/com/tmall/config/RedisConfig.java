@@ -31,6 +31,7 @@ import java.util.Map;
 @Configuration
 //Redis 缓存配置类
 public class RedisConfig extends CachingConfigurerSupport {
+    //RedisTemplate的默认序列化器不是很方便在redis管理工具中查看，我们可以自己定义一个RedisTemplate实例，修改默认的序列化器。
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
         RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
