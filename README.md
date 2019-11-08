@@ -1,4 +1,3 @@
-[TOC]
 
 # TmallBySpringboot
 
@@ -102,3 +101,4 @@
 13. 整体流程
 
 <img src="https://github.com/xuzhuang1996/tmall_springboot/blob/master/img/tmall.png" width=100% height=100% />
+14. 如果想直接使用原始的how2j代码，可以版本回退到2d8bafcc4cd517a47a184b9a536b691647857e67。这里基础功能。后面自己有其他学到的功能
