@@ -41,7 +41,7 @@
 
 6. server.servlet.context-path=/tmall_springboot，如果前台请求路径http://localhost:8888/tmall_springboot/SecProduct ，但是最终发现请求的就是缺tmall_springboot即http://localhost:8888/SecProduct ，很有可能是前台请求路径写成了/SecProduct，正确的写法是SecProduct
 
-## 查看用法
+## 记录
 1. 实体类：从Category开始，之后查看Property类的处理（多对一）。如果某些字段类中有但数据库中没有，则需要注解进行忽略。
 
    - product表是没有ProductImage信息的，但是product类有该字段，只是运用Transient注解在存储时将其忽略，因此取出来Product时是需要设置这些被忽略的字段。因此可以在productService也可以在控制器中设置。我基于控制器只写逻辑代码的原则，将设置放在了服务层。
